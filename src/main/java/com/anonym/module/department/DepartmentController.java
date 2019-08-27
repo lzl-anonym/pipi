@@ -38,8 +38,8 @@ public class DepartmentController {
     }
 
     @ApiOperation(value = "根据部门名称查询部门及员工列表", notes = "根据部门名称查询部门及员工列表")
-    @GetMapping("/department/listEmployeeByDepartmentName")
-    public ResponseDTO<List<DepartmentDTO>> listDepartmentEmployee(String departmentName) {
+    @GetMapping("/department/listEmployeeByDepartmentName/{departmentName}")
+    public ResponseDTO<List<DepartmentDTO>> listDepartmentEmployee(@PathVariable String departmentName) {
         return departmentService.listAllDepartmentEmployee(departmentName);
     }
 

@@ -11,10 +11,7 @@ import com.anonym.module.systemconfig.domain.SystemConfigUpdateDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -47,14 +44,14 @@ public class SystemConfigController {
     }
 
     @ApiOperation(value = "根据分组查询所有系统配置", notes = "根据分组查询所有系统配置")
-    @GetMapping("systemConfig/getListByGroup")
-    public ResponseDTO<List<SystemConfigDTO>> getListByGroup(String group) {
+    @GetMapping("systemConfig/getListByGroup/{group}")
+    public ResponseDTO<List<SystemConfigDTO>> getListByGroup(@PathVariable String group) {
         return systemConfigService.getListByGroup(group);
     }
 
     @ApiOperation(value = "通过key获取对应的信息", notes = "通过key获取对应的信息")
-    @GetMapping("systemConfig/selectByKey")
-    public ResponseDTO<SystemConfigDTO> selectByKey(String configKey) {
+    @GetMapping("systemConfig/selectByKey/{configKey}")
+    public ResponseDTO<SystemConfigDTO> selectByKey(@PathVariable String configKey) {
         return systemConfigService.selectByKey(configKey);
     }
 
