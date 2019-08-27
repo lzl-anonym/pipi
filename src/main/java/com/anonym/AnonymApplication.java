@@ -11,8 +11,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 public class AnonymApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AnonymApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AnonymApplication.class, args);
+    }
 
 }
