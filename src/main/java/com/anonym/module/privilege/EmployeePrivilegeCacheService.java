@@ -147,9 +147,6 @@ public class EmployeePrivilegeCacheService {
 
     /**
      * 根据角色id更新 包含此角色id的在线用户权限
-     *
-     * @author lidoudou
-     * @date 2018/9/19 17:14
      */
     public void updateOnlineEmployeePrivilegeByRoleId(Integer roleId) {
         List<EmployeeDTO> roleEmployeeList = roleRelationDao.selectEmployeeByRoleId(roleId);

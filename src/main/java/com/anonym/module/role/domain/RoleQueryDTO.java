@@ -5,16 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**
- * [  ]
- *
- * @author yandanyang
- * @version 1.0
- * @company 钢圈
- * @copyright (c) 2019 钢圈Inc. All rights reserved.
- * @date
- * @since JDK1.8
- */
+
 @EqualsAndHashCode(callSuper = false)
 @Data
 public class RoleQueryDTO extends PageBaseDTO {

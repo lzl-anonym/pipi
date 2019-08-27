@@ -2,14 +2,7 @@ package com.anonym.module.privilege.constant;
 
 import com.anonym.common.constant.ResponseCodeConst;
 
-/**
- * @author yandanyang
- * @version 1.0
- * @company 钢圈
- * @copyright (c) 2019 钢圈Inc. All rights reserved.
- * @date
- * @since JDK1.8
- */
+
 public class PrivilegeResponseCodeConst extends ResponseCodeConst {
 
     public static final PrivilegeResponseCodeConst PRIVILEGE_NOT_EXISTS = new PrivilegeResponseCodeConst(1400, "当前数据不存在，请联系你的管理员！");

@@ -9,9 +9,6 @@ import java.util.List;
 
 /**
  * 分页工具类
- *
- * @author GHQ
- * @date 2017-12-23 16:40
  */
 
 public class PaginationUtil {
@@ -47,8 +44,6 @@ public class PaginationUtil {
      * @param sourceList  原list
      * @param targetClazz 目标类
      * @return
-     * @author yandanyang
-     * @date 2018年5月16日 下午6:05:28
      */
     public static <T, E> PageInfoDTO<T> convertPageInfoDTO(Page page, List<E> sourceList, Class<T> targetClazz) {
         PageInfoDTO pageInfoDTO = setPage(page);
@@ -64,8 +59,6 @@ public class PaginationUtil {
      * @param page
      * @param sourceList list
      * @return
-     * @author yandanyang
-     * @date 2018年5月16日 下午6:05:28
      */
     public static <T> PageInfoDTO<T> convert2PageInfoDTO(Page page, List<T> sourceList) {
         PageInfoDTO pageInfoDTO = setPage(page);

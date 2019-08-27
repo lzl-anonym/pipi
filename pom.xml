@@ -154,6 +154,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/eu.bitwalker/UserAgentUtils -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.17</version>
+        </dependency>
 
 
     </dependencies>
@@ -169,7 +175,6 @@
                     <exclude>prod/*</exclude>
                 </excludes>
             </resource>
-
             <resource>
                 <directory>src/main/resources/${profiles.active}</directory>
                 <filtering>true</filtering>

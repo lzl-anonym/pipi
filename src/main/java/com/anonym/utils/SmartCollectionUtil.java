@@ -22,7 +22,6 @@ public class SmartCollectionUtil extends CollectionUtils {
      * @param list  集合
      * @param func  执行方法
      * @param limit 每次执行数量
-     * @author listen
      */
     public static <T> void batchExecute(List<T> list, Function<List<T>, Integer> func, int limit) {
         if (CollectionUtils.isEmpty(list)) {

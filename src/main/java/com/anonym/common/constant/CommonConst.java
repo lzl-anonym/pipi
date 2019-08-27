@@ -26,7 +26,7 @@ public class CommonConst {
 
     public static final class CommonCollection {
 
-        public static final Set<String> IGNORE_URL = ImmutableSet.of("/swagger", "Excel");
+        public static final Set<String> IGNORE_URL = ImmutableSet.of("/swagger", "/v2/api-docs", "Excel");
 
         public static final Set<String> IGNORE_URL_MAPPING = ImmutableSet.of(IGNORE_H5_URL_MAPPING);
 

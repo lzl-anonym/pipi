@@ -3,7 +3,6 @@ package com.anonym.module.role;
 import com.anonym.common.constant.ResponseCodeConst;
 
 /**
- * @author yandanyang
  * 角色业务状态码 6001 - 6999
  */
 public class RoleResponseCodeConst extends ResponseCodeConst {

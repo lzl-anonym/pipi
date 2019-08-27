@@ -43,8 +43,6 @@ public interface DepartmentDao extends BaseMapper<DepartmentEntity> {
      *
      * @param
      * @return
-     * @auther yandanyang
-     * @date 2018/8/25 0025 上午 9:46
      */
     List<DepartmentDTO> selectByParentId(@Param("departmentId") Long departmentId);
 

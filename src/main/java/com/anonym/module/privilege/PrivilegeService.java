@@ -18,13 +18,6 @@ import java.util.stream.Collectors;
 
 /**
  * [ 后台员工权限 ]
- *
- * @author yandanyang
- * @version 1.0
- * @company 钢圈
- * @copyright (c) 2019 钢圈Inc. All rights reserved.
- * @date
- * @since JDK1.8
  */
 @Service
 public class PrivilegeService {

@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 
 /**
  * 部门管理业务类
- *
- * @author listen
  * @date 2017/12/19 14:25
  */
 @Service
@@ -86,9 +84,6 @@ public class DepartmentService {
 
     /**
      * 过滤部门名称，获取过滤后的结果
-     *
-     * @author lidoudou
-     * @date 2019/4/28 20:17
      */
     private List<DepartmentDTO> filterDepartment(List<DepartmentDTO> departmentDTOList, String departmentName) {
         Map<Integer, DepartmentDTO> departmentMap = new HashMap<>();

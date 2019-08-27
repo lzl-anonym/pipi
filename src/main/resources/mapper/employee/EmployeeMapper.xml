@@ -9,6 +9,7 @@
         e.login_name,
         e.login_pwd,
         e.actual_name,
+        e.nick_name,
         e.phone,
         e.id_card,
         e.birthday,
@@ -17,12 +18,9 @@
         e.is_leave,
         e.is_disabled,
         e.remark,
+        e.wx_open_id,
         e.update_time,
-        e.create_time,
-        e.position_id,
-        e.oa_number,
-        e.entry_date,
-        e.erp_number
+        e.create_time
     </sql>
 
 
@@ -230,9 +228,6 @@
             </if>
         </where>
     </select>
-
-
-
 
 
 </mapper>
