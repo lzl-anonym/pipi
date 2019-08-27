@@ -3,10 +3,15 @@ package com.anonym.interceptor;
 import com.alibaba.fastjson.JSONObject;
 import com.anonym.common.anno.NoNeedLogin;
 import com.anonym.common.anno.NoValidPrivilege;
-import com.anonym.common.domain.ResponseDTO;
 import com.anonym.common.constant.CommonConst;
+import com.anonym.common.domain.ResponseDTO;
+import com.anonym.common.token.IRequestToken;
+import com.anonym.common.token.RequestTokenService;
 import com.anonym.common.token.TokenCommonResponseCodeConst;
+import com.anonym.module.privilege.EmployeePrivilegeCacheService;
+import com.anonym.utils.RequestTokenUtil;
 import com.anonym.utils.SmartStringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -27,18 +32,22 @@ public class PrivilegeInterceptor extends HandlerInterceptorAdapter {
     @Value("${access-control-allow-origin}")
     private String accessControlAllowOrigin;
 
-//    @Autowired
-//    private RequestTokenService requestTokenService;
-//
-//    @Autowired
-//    private EmployeePrivilegeCacheService employeePrivilegeCacheService;
+    @Autowired
+    private RequestTokenService requestTokenService;
+
+    @Autowired
+    private EmployeePrivilegeCacheService employeePrivilegeCacheService;
+
+    private static Integer SUM = 0;
 
     /**
      * 拦截服务器端响应处理ajax请求返回结果
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("===========经过拦截器============");
+
+        SUM += 1;
+        System.out.println("===========经过拦截器============" + SUM);
 
         response.setHeader("Access-Control-Allow-Origin", accessControlAllowOrigin);
         response.setHeader("Access-Control-Allow-Credentials", "true");
@@ -72,12 +81,12 @@ public class PrivilegeInterceptor extends HandlerInterceptorAdapter {
                 return false;
             }
 
-/*            //根据token获取登录用户
+            //根据token获取登录用户
             IRequestToken requestToken = requestTokenService.getEmployeeTokenInfo(xAccessToken);
             if (null == requestToken) {
                 this.outputResult(response, TokenCommonResponseCodeConst.LOGIN_ERROR);
                 return false;
-            }*/
+            }
 
             //判断接口权限
             String methodName = ((HandlerMethod) handler).getMethod().getName();
@@ -94,20 +103,19 @@ public class PrivilegeInterceptor extends HandlerInterceptorAdapter {
             } else if (isMethodAnnotation) {
                 noValidPrivilege = m.getAnnotation(NoValidPrivilege.class);
             }
-/*            //不需验证权限
+            //不需验证权限
             if (noValidPrivilege != null) {
                 RequestTokenUtil.setUser(request, requestToken);
                 return true;
-            }*/
+            }
             //需要验证权限
-            // TODO: 2019-08-27 做完登录的权限  放开此代码
-/*            Boolean privilegeValidPass = employeePrivilegeCacheService.checkEmployeeHavePrivilege(requestToken.getId(), controllerName, methodName);
+            Boolean privilegeValidPass = employeePrivilegeCacheService.checkEmployeeHavePrivilege(requestToken.getId(), controllerName, methodName);
             if (!privilegeValidPass) {
                 this.outputResult(response, TokenCommonResponseCodeConst.NOT_HAVE_PRIVILEGES);
                 return false;
             } else {
                 RequestTokenUtil.setUser(request, requestToken);
-            }*/
+            }
             return true;
         }
         return true;

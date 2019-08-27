@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface IRequestToken<T> {
 
-    void setId(Long id);
+    void setId(Integer id);
 
     void setUserType(Integer userType);
 
@@ -19,9 +19,9 @@ public interface IRequestToken<T> {
 
     void setXAccessToken(String xAccessToken);
 
-    void setGroupIds(List<Long> groupIds);
+    void setGroupIds(List<Integer> groupIds);
 
-    Long getId();
+    Integer getId();
 
     String getName();
 
@@ -31,5 +31,5 @@ public interface IRequestToken<T> {
 
     String getXAccessToken();
 
-    List<Long> getGroupIds();
+    List<Integer> getGroupIds();
 }

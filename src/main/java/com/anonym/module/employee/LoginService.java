@@ -33,7 +33,6 @@ public class LoginService {
         if (EmployeeStatusEnum.DISABLED.equalsValue(employeeDTO.getIsDisabled())) {
             return ResponseDTO.wrap(EmployeeResponseCodeConst.IS_DISABLED);
         }
-
         //jwt token赋值
         RequestTokenDTO<EmployeeDTO> requestTokenDTO = new RequestTokenDTO();
         requestTokenDTO.setId(employeeDTO.getId());

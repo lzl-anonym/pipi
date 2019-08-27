@@ -5,6 +5,8 @@ import com.anonym.module.role.domain.RoleAddDTO;
 import com.anonym.module.role.domain.RoleDTO;
 import com.anonym.module.role.domain.RoleEntity;
 import com.anonym.module.role.domain.RoleUpdateDTO;
+import com.anonym.module.roleemployee.RoleEmployeeDao;
+import com.anonym.module.roleprivilege.RolePrivilegeDao;
 import com.anonym.utils.SmartBeanUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +24,11 @@ public class RoleService {
     @Autowired
     private RoleDao roleDao;
 
-//    @Autowired
-//    private RolePrivilegeDao rolePrivilegeDao;
-//
-//    @Autowired
-//    private RoleEmployeeDao roleEmployeeDao;
+    @Autowired
+    private RolePrivilegeDao rolePrivilegeDao;
+
+    @Autowired
+    private RoleEmployeeDao roleEmployeeDao;
 
     /**
      * 新增添加角色
@@ -46,14 +48,16 @@ public class RoleService {
 
 
     // TODO: 2019-08-27   添加权限后  放开 
-    /*    *//**
+    /*    */
+
+    /**
      * 根据角色id 删除
      *
      * @param roleId
      * @return ResponseDTO
-     *//*
+     */
     @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO deleteRole(Long roleId) {
+    public ResponseDTO deleteRole(Integer roleId) {
         RoleEntity roleEntity = roleDao.selectById(roleId);
         if (null == roleEntity) {
             return ResponseDTO.wrap(RoleResponseCodeConst.ROLE_NOT_EXISTS);
@@ -62,7 +66,7 @@ public class RoleService {
         rolePrivilegeDao.deleteByRoleId(roleId);
         roleEmployeeDao.deleteByRoleId(roleId);
         return ResponseDTO.succ();
-    }*/
+    }
 
     /**
      * 更新角色

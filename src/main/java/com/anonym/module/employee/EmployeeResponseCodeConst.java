@@ -4,10 +4,6 @@ import com.anonym.common.constant.ResponseCodeConst;
 
 /**
  * 员工常量类
- * 3001-3999
- *
- * @author lidoudou
- * @date 2017年12月19日下午19:04:52
  */
 public class EmployeeResponseCodeConst extends ResponseCodeConst {
 

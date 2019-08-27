@@ -35,5 +35,204 @@
         e.login_name = #{loginName} and e.login_pwd = #{loginPwd}
     </select>
 
+    <select id="selectEmployeeList" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>,
+        d.name AS department_name,
+        tp.name as positionName
+        FROM
+        t_employee e
+        LEFT JOIN t_department d ON d.id = e.department_id
+        LEFT JOIN t_position tp ON tp.position_id =e.position_id
+        <where>
+            <if test="queryDTO.keyword != null and queryDTO.keyword != ''">
+                AND INSTR(e.actual_name,#{queryDTO.keyword})
+            </if>
+            <if test="queryDTO.isDisabled != null">
+                AND e.is_disabled = #{queryDTO.isDisabled}
+            </if>
+            <if test="queryDTO.isDelete != null">
+                AND e.is_delete = #{queryDTO.isDelete}
+            </if>
+            <if test="queryDTO.departmentId != null">
+                AND e.department_id = #{queryDTO.departmentId}
+            </if>
+        </where>
+        order by e.create_time desc
+    </select>
+
+
+    <update id="batchUpdateStatus">
+        UPDATE t_employee e
+        set e.is_disabled = #{isDisabled}
+        WHERE id in
+        <foreach collection="employeeIds" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+
+    <select id="getByLoginName" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_employee e
+        WHERE
+        e.login_name = #{loginName} and e.is_disabled = #{isDisabled}
+    </select>
+
+
+    <select id="getByPhone" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_employee e
+        WHERE
+        e.phone = #{phone} and e.is_disabled = #{isDisabled}
+    </select>
+
+
+    <select id="listAll" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_employee e
+        order by e.create_time desc
+    </select>
+
+    <select id="countByDepartmentId" resultType="integer">
+        SELECT
+        count(1)
+        FROM
+        t_employee e
+        WHERE
+        e.department_id = #{departmentId}
+    </select>
+
+
+    <select id="getEmployeeIdByDeptId" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_employee e
+        WHERE
+        e.department_id = #{departmentId}
+        order by e.create_time desc
+    </select>
+
+
+    <select id="getEmployeeIdByDeptIds" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_employee e
+        WHERE
+        e.department_id IN
+        <foreach collection="departmentIds" item="item" separator=",">
+            #{item}
+        </foreach>
+        order by e.create_time desc
+    </select>
+
+    <select id="getEmployeeByIds" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_employee e
+        where e.id IN
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        order by e.create_time desc
+    </select>
+
+    <update id="updatePassword">
+         UPDATE  t_employee
+        SET login_pwd = #{password}
+        WHERE id = #{employeeId}
+    </update>
+
+    <select id="getByPositionId" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>,
+        d.name AS department_name,
+        tp.name as positionName
+        FROM
+        t_employee e
+        LEFT JOIN t_department d ON d.id = e.department_id
+        LEFT JOIN t_position tp ON tp.position_id =e.position_id
+        where e.position_id = #{positionId}
+    </select>
+
+    <!-- 根据 员工编号 批量查询员工数据 -->
+    <select id="listByEmployeeNumber" resultType="com.anonym.module.employee.domain.EmployeeEntity">
+        SELECT id,oa_number
+        FROM t_employee
+        WHERE oa_number IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="batchInsert">
+        <foreach collection="list" item="entity" index="item" separator=";">
+            INSERT INTO t_employee(
+            id,
+            login_name,
+            login_pwd,
+            actual_name,
+            phone,
+            department_id,
+            is_leave,
+            is_disabled,
+            create_user,
+            update_time
+            )VALUES (
+            #{entity.id},
+            #{entity.loginName},
+            #{entity.loginPwd},
+            #{entity.actualName},
+            #{entity.phone},
+            #{entity.departmentId},
+            #{entity.isLeave},
+            #{entity.isDisabled},
+            #{entity.createUser},
+            #{entity.updateTime}
+            )
+        </foreach>
+    </insert>
+
+    <update id="batchUpdate">
+        <foreach collection="list" item="entity" index="item" separator=";">
+            UPDATE t_employee SET
+            login_name = #{entity.loginName},
+            actual_name = #{entity.actualName},
+            phone = #{entity.phone},
+            department_id = #{entity.departmentId},
+            is_leave = #{entity.isLeave},
+            is_disabled = #{entity.isDisabled},
+            update_time = #{entity.updateTime}
+            WHERE
+            id = #{entity.id}
+        </foreach>
+    </update>
+
+    <select id="selectListByLoginNameList"
+            resultType="com.anonym.module.employee.domain.EmployeeEntity">
+        SELECT id,login_name,phone FROM t_employee
+        <where>
+            is_disabled = #{status}
+            <if test="list != null and list.size()>0">
+                AND phone IN
+                <foreach collection="list" item="phone" index="item" separator="," open="(" close=")">
+                    #{phone}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+
+
 
 </mapper>

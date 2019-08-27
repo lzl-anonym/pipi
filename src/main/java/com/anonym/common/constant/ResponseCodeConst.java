@@ -1,8 +1,11 @@
 package com.anonym.common.constant;
 
-import com.anonym.module.employee.EmployeeResponseCodeConst;
-import com.anonym.module.role.RoleResponseCodeConst;
 import com.anonym.common.token.TokenCommonResponseCodeConst;
+import com.anonym.module.department.DepartmentResponseCodeConst;
+import com.anonym.module.employee.EmployeeResponseCodeConst;
+import com.anonym.module.privilege.constant.PrivilegeResponseCodeConst;
+import com.anonym.module.role.RoleResponseCodeConst;
+import com.anonym.module.systemconfig.constant.SystemConfigResponseCodeConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +28,14 @@ public class ResponseCodeConst {
 
         ResponseCodeContainer.register(RoleResponseCodeConst.class, 1100, 1199);
         ResponseCodeContainer.register(EmployeeResponseCodeConst.class, 1200, 1299);
+
+        ResponseCodeContainer.register(DepartmentResponseCodeConst.class, 1300, 1399);
+
+        ResponseCodeContainer.register(PrivilegeResponseCodeConst.class, 1400, 1499);
+        ResponseCodeContainer.register(SystemConfigResponseCodeConst.class, 1500, 1599);
+
+
+
 
 
 
