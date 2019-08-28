@@ -73,4 +73,7 @@ public class SwaggerTagConst {
 
     public static final String OFFLINE_OPERATION_SALES = "线下运营";
 
+    public static final String SERVICE_ITEM = "服务项管理";
+
+
 }

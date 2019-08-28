@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anonym.module.serviceitem.ServiceItemDao">
+
+    <resultMap id="ServiceItemVO" type="com.anonym.module.serviceitem.domian.ServiceItemVO"></resultMap>
+
+    <resultMap id="ServiceItemEntity" type="com.anonym.module.serviceitem.domian.ServiceItemEntity"></resultMap>
+
+    <select id="queryByPage" resultMap="ServiceItemVO">
+        SELECT
+            service_item_id,
+            item_name,
+            price,
+            member_price,
+            member_price_num,
+            create_time,
+            update_time
+        FROM
+            t_service_item
+    </select>
+
+    <select id="getByName" resultMap="ServiceItemEntity">
+        SELECT
+            service_item_id,
+            item_name,
+            price,
+            member_price,
+            member_price_num,
+            create_time,
+            update_time
+        FROM
+            t_service_item
+        WHERE
+            item_name = #{name}
+            <if test="excludeId != null">
+                AND position_id != #{excludeId}
+            </if>
+    </select>
+
+
+</mapper>

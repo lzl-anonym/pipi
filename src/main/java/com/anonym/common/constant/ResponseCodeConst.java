@@ -5,6 +5,7 @@ import com.anonym.module.department.DepartmentResponseCodeConst;
 import com.anonym.module.employee.EmployeeResponseCodeConst;
 import com.anonym.module.privilege.constant.PrivilegeResponseCodeConst;
 import com.anonym.module.role.RoleResponseCodeConst;
+import com.anonym.module.serviceitem.ServiceItemResponseCodeConst;
 import com.anonym.module.systemconfig.constant.SystemConfigResponseCodeConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,10 @@ public class ResponseCodeConst {
 
         ResponseCodeContainer.register(PrivilegeResponseCodeConst.class, 1400, 1499);
         ResponseCodeContainer.register(SystemConfigResponseCodeConst.class, 1500, 1599);
+
+        ResponseCodeContainer.register(ServiceItemResponseCodeConst.class, 1600, 1699);
+
+
 
 
 
