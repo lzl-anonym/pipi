@@ -2,6 +2,7 @@ package com.anonym.config;
 
 import com.anonym.common.constant.ResponseCodeConst;
 import com.anonym.common.domain.ResponseDTO;
+import com.anonym.common.exception.ImportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
@@ -54,6 +55,11 @@ public class GlobalExceptionHandler {
             List<FieldError> fieldErrors = ((MethodArgumentNotValidException) e).getBindingResult().getFieldErrors();
             List<String> msgList = fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
             return ResponseDTO.wrap(ResponseCodeConst.ERROR_PARAM, String.join(",", msgList));
+        }
+        //导入客户异常
+        // TODO: 2019-08-28  
+        if (e instanceof ImportException) {
+            return ResponseDTO.wrap(ResponseCodeConst.SYSTEM_ERROR, e.getMessage());
         }
 
         log.error("error:", e);

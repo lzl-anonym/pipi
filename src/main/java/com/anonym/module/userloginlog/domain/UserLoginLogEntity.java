@@ -3,7 +3,6 @@ package com.anonym.module.userloginlog.domain;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,11 +10,9 @@ import java.util.Date;
 
 /**
  * [ 用户登录日志]
-
  */
 @EqualsAndHashCode(callSuper = false)
 @Data
-@Builder
 @TableName("t_user_login_log")
 public class UserLoginLogEntity {
 
@@ -78,6 +75,4 @@ public class UserLoginLogEntity {
      * 创建时间
      */
     private Date createTime;
-
-
 }
