@@ -75,5 +75,7 @@ public class SwaggerTagConst {
 
     public static final String SERVICE_ITEM = "服务项管理";
 
+    public static final String MEMBER = "会员管理";
+
 
 }

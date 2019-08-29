@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -35,6 +36,11 @@ public class MemberEntity {
      * 名字
      */
     private String name;
+
+    /**
+     * 会员价格
+     */
+    private BigDecimal memberPrice;
 
     /**
      * 总次数
