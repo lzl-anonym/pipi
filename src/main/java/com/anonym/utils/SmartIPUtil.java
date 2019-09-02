@@ -95,7 +95,7 @@ public class SmartIPUtil {
             }
             return ip;
         }
-        return "";
+        return ip;
     }
 
     private static Boolean ipValid(String ip) {
