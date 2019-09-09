@@ -1,7 +1,6 @@
 package com.anonym.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
@@ -10,8 +9,9 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @author lizongliang
  * @date 2019-09-09 9:56
  */
-@Configuration
+//@Configuration
 public class WebSocketConfig {
+    // TODO: 2019-09-09   取消websocket配置
 
     @Bean
     public ServerEndpointExporter serverEndpointExporter() {
