@@ -165,6 +165,11 @@
             <artifactId>UserAgentUtils</artifactId>
             <version>1.17</version>
         </dependency>
+        <!--SpringBoot2.0对WebSocket的支持-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
 
 
     </dependencies>
