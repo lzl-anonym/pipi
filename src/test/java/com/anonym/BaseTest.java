@@ -12,12 +12,12 @@ public class BaseTest {
 
     @Before
     public void before() {
-        System.out.println("=====================测试开始=====================");
+        System.out.println("=====================Test Start=====================");
     }
 
     @After
     public void after() {
-        System.out.println("=====================测试结束=====================");
+        System.out.println("======================Test End=====================");
     }
 
 }

@@ -1,4 +1,4 @@
-package com.anonym.module.importthread;
+package com.anonym.module.testimportthread;
 
 import com.anonym.common.domain.ResponseDTO;
 import org.springframework.stereotype.Service;
