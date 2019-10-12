@@ -174,15 +174,10 @@
         <!--kafka测试-->
         <dependency>
             <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>1.0.0</version>
+            <artifactId>kafka_2.10</artifactId>
+            <version>0.8.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-streams</artifactId>
-            <version>1.0.0</version>
-        </dependency>
 
     </dependencies>
 
