@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.anonym.module.department.DepartmentDao">
+<mapper namespace="com.anonym.module.admin.department.DepartmentDao">
 
 
-    <resultMap id="DepartmentDTO"
-               type="com.anonym.module.department.domain.DepartmentDTO"></resultMap>
+    <resultMap id="DepartmentVO"
+               type="com.anonym.module.admin.department.domain.dto.DepartmentVO"></resultMap>
 
 
     <sql id="baseSql">
@@ -15,8 +15,7 @@
         d.parent_id,
         d.sort,
         d.update_time,
-        d.create_time,
-        d.area
+        d.create_time
     </sql>
 
     <select id="countSubDepartment" resultType="integer">
@@ -28,7 +27,7 @@
         parent_id = #{departmentId}
     </select>
 
-    <select id="listAll" resultMap="DepartmentDTO">
+    <select id="listAll" resultMap="DepartmentVO">
         SELECT
         <include refid="baseSql"></include>,
         e.actual_name as managerName,
@@ -40,21 +39,7 @@
         order by sort asc
     </select>
 
-    <select id="queryDepartmentList" resultMap="DepartmentDTO">
-        SELECT
-        <include refid="baseSql"></include>,
-        e.actual_name as managerName,
-        pd.`name` as parentName
-        FROM
-        t_department d
-        left join t_employee e on d.manager_id= e.id
-        left join t_department pd on d.parent_id = pd.id
-        WHERE d.deleted = 0
-        order by sort asc
-    </select>
-
-
-    <select id="selectByParentId" resultMap="DepartmentDTO">
+    <select id="selectByParentId" resultMap="DepartmentVO">
         SELECT
         <include refid="baseSql"></include>
         FROM
@@ -64,49 +49,13 @@
         order by sort desc
     </select>
 
-    <insert id="batchInsert">
-        <foreach collection="list" item="entity" index="item" separator=";">
-            INSERT INTO t_department(
-            id,
-            name,
-            short_name,
-            manager_id,
-            parent_id,
-            sort,
-            deleted,
-            update_time,
-            area
-            )VALUES (
-            #{entity.id},
-            #{entity.name},
-            #{entity.shortName},
-            #{entity.managerId},
-            #{entity.parentId},
-            #{entity.sort},
-            #{entity.deleted},
-            #{entity.updateTime},
-            #{entity.area}
-            )
-        </foreach>
-    </insert>
-
-    <select id="selectMaxSort" resultType="java.lang.Integer">
-        SELECT IFNULL(MAX(sort),0) FROM  t_department
+    <select id="selectByDepartmentName" resultType="com.anonym.module.admin.department.domain.entity.DepartmentEntity">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_department d
+        where
+        d.name = #{departmentName}
     </select>
 
-    <update id="batchUpdate">
-        <foreach collection="list" item="entity" index="item" separator=";">
-            UPDATE t_department
-            SET
-            name = #{entity.name},
-            short_name = #{entity.shortName},
-            manager_id = #{entity.managerId},
-            parent_id = #{entity.parentId},
-            update_time = #{entity.updateTime},
-            deleted = #{entity.deleted},
-            area = #{entity.area}
-            WHERE
-            id = #{entity.id}
-        </foreach>
-    </update>
 </mapper>

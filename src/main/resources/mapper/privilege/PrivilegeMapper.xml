@@ -1,57 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.anonym.module.privilege.PrivilegeDao">
+<mapper namespace="com.anonym.module.admin.privilege.dao.PrivilegeDao">
 
-    <resultMap id="EmployeePrivilegeEntity"
-               type="com.anonym.module.privilege.domain.PrivilegeEntity"></resultMap>
-
+    <resultMap id="PrivilegeEntity"
+               type="com.anonym.module.admin.privilege.domain.entity.PrivilegeEntity"></resultMap>
 
     <sql id="baseSql">
         p.id,
         p.type,
         p.name,
-        p.router_key,
+        p.key,
         p.url,
-        p.page,
-        p.icon,
-        p.is_show,
-        p.parent_id,
-        p.seq,
-        p.is_enable,
+        p.sort,
+        p.parent_key,
         p.update_time,
         p.create_time
     </sql>
 
-
-    <select id="selectByParentId" resultMap="EmployeePrivilegeEntity">
-        SELECT
-        <include refid="baseSql"></include>
-        FROM
-        t_privilege p
-        WHERE
-        p.parent_id = #{parentId}
-    </select>
-
-    <delete id="delPrivilege">
-        DELETE FROM t_privilege
-        WHERE id IN
-        <foreach collection="privilegeIds" item="item" separator="," open="(" close=")">
-            #{item}
-        </foreach>
-    </delete>
-
-
-    <select id="selectByParentIdAndType" resultMap="EmployeePrivilegeEntity">
-        SELECT
-        <include refid="baseSql"></include>
-        FROM
-        t_privilege p
-        WHERE
-        p.parent_id = #{parentId} and p.type = #{type}
-    </select>
-
-
-    <select id="selectByType" resultMap="EmployeePrivilegeEntity">
+    <select id="selectByType" resultMap="PrivilegeEntity">
         SELECT
         <include refid="baseSql"></include>
         FROM
@@ -61,30 +27,83 @@
     </select>
 
 
-    <select id="selectByExcludeType" resultMap="EmployeePrivilegeEntity">
+    <select id="selectByExcludeType" resultMap="PrivilegeEntity">
         SELECT
         <include refid="baseSql"></include>
         FROM
         t_privilege p
         WHERE
-        p.type &lt;&gt; #{type} and p.scope = #{scope}
+        p.type &lt;&gt; #{type}
     </select>
 
-    <select id="selectAll" resultMap="EmployeePrivilegeEntity">
-        SELECT
-        <include refid="baseSql"></include>
-        FROM
-        t_privilege p
-    </select>
 
-    <select id="listByEnable" resultMap="EmployeePrivilegeEntity">
+    <delete id="delByKeyList">
+        DELETE FROM t_privilege
+        WHERE key IN
+        <foreach collection="keyList" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="delByParentKeyList">
+        DELETE FROM t_privilege
+        WHERE parent_key IN
+        <foreach collection="keyList" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        INSERT INTO t_privilege (type, `name`, `key`,url,parent_key,create_time,update_time,sort) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.type},
+            #{item.name},
+            #{item.key},
+            #{item.url},
+            #{item.parentKey},
+            now(),
+            now(),
+            #{item.sort}
+            )
+        </foreach>
+    </insert>
+
+    <update id="batchUpdate">
+        <foreach collection="updateList" item="item" index="index" separator=";">
+            UPDATE t_privilege
+            SET type=#{item.type},`name`=#{item.name},url=#{item.url},parent_key=#{item.parentKey},update_time=now(),sort=#{item.sort}
+            WHERE `key` = #{item.key}
+        </foreach>
+    </update>
+
+
+    <select id="selectByParentKey" resultMap="PrivilegeEntity">
         SELECT
         <include refid="baseSql"></include>
         FROM
         t_privilege p
         WHERE
-        p.is_enable = #{isEnable} and p.scope = #{scope} and p.is_show = #{isEnable}
+        p.parent_key = #{parentKey}
     </select>
 
+
+    <select id="selectByKey" resultMap="PrivilegeEntity">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_privilege p
+        WHERE
+        p.key = #{key}
+    </select>
+
+    <select id="selectAll" resultMap="PrivilegeEntity">
+        SELECT
+        <include refid="baseSql"></include>,
+        parent.id as parent_id
+        FROM
+        t_privilege p
+        LEFT JOIN t_privilege parent on p.parent_key = parent.`key`
+    </select>
 
 </mapper>

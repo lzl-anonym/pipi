@@ -2,7 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.anonym.module.systemconfig.SystemConfigDao">
 
-    <resultMap id="systemConfigMap" type="com.anonym.module.systemconfig.domain.SystemConfigEntity"></resultMap>
+    <resultMap id="systemConfigMap" type="com.anonym.module.systemconfig.domain.entity.SystemConfigEntity"></resultMap>
+
+    <!-- 根据 key 更新 -->
+    <update id="updateByKey">
+        UPDATE t_system_config
+        SET config_value = #{configValue}
+        WHERE config_key = #{configKey}
+    </update>
 
     <!-- 查询所有系统配置(分页) -->
     <select id="selectSystemSettingList" resultMap="systemConfigMap">

@@ -1,43 +1,82 @@
 package com.anonym.module.systemconfig.constant;
 
 /**
- * 系统参数配置常量
+ * [ 系统配置常量类 ]
  */
 public class SystemConfigEnum {
 
     public enum Group {
-        /**
-         * 上传
-         */
-        UPLOAD,
+        BACK, SYSTEM, ORDER, REWARD
     }
 
     public enum Key {
 
+        /**
+         * 超管id
+         */
         EMPLOYEE_SUPERMAN,
         /**
-         * 本地上传URL前缀
+         * 阿里云OSS配置项
+         */
+        ALI_OSS,
+        /**
+         * 七牛云OSS配置项
+         */
+        QI_NIU_OSS,
+        /**
+         * 本地文件上传url前缀
          */
         LOCAL_UPLOAD_URL_PREFIX,
+        /**
+         * 邮件配置
+         */
+        EMAIL,
 
         /**
-         * 商服部门id
+         * 订单超时分钟
          */
-        CUSTOMER_SERVICE_DEPT_ID,
+        ORDER_OVERTIME,
 
         /**
-         * 线下运营部门id
+         * 回馈金比例
          */
-        OFFLINE_OPERATION_ID,
+        REWARD_RATIO,
 
         /**
-         * 自营店铺部id
+         * 默认经纬度
          */
-        SELF_STORE_DEPARTMENT_ID,
+        DEFAULT_LONGITUDE_LATITUDE,
+
         /**
-         * 需要同步erp数据的部门id集合
+         * 后管默认密码
          */
-        SYNC_ERP_DATA_DEPARTMENT_ID;
+        DEFAULT_EMPLOYEE_LOGIN_PASSWORD,
+
+        /**
+         * 店铺默认所属部门
+         */
+        DEFAULT_DEPARTMENT_FOR_SHOP,
+
+        /**
+         * 商家负责人角色ID
+         */
+        SHOP_MANAGER_ROLE,
+
+        /**
+         * 商家成员角色ID
+         */
+        SHOP_EMPLOYEE_ROLE,
+
+        /**
+         * 敏感词检测开启状态
+         */
+        SENSITIVE_WORD_DETECTION,
+
+        /**
+         * 商家结算周期配置
+         */
+        SHOP_STATEMENT_CYCLE_CONFIG
+
     }
 
 }

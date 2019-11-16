@@ -5,8 +5,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 拥有自己的thread facotry是为了jstack时候能看到是哪个线程
- *
- * @author jiaozi
  */
 public class SmartThreadFactory implements ThreadFactory {
 

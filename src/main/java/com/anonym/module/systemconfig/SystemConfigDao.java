@@ -1,7 +1,7 @@
 package com.anonym.module.systemconfig;
 
-import com.anonym.module.systemconfig.domain.SystemConfigEntity;
-import com.anonym.module.systemconfig.domain.SystemConfigQueryDTO;
+import com.anonym.module.systemconfig.domain.dto.SystemConfigQueryDTO;
+import com.anonym.module.systemconfig.domain.entity.SystemConfigEntity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import org.apache.ibatis.annotations.Mapper;
@@ -40,7 +40,7 @@ public interface SystemConfigDao extends BaseMapper<SystemConfigEntity> {
      * @param excludeId
      * @return
      */
-    SystemConfigEntity getByKeyExcludeId(@Param("key") String key, @Param("excludeId") Integer excludeId);
+    SystemConfigEntity getByKeyExcludeId(@Param("key") String key, @Param("excludeId") Long excludeId);
 
     /**
      * 查询所有系统配置
@@ -58,4 +58,12 @@ public interface SystemConfigDao extends BaseMapper<SystemConfigEntity> {
     List<SystemConfigEntity> getListByGroup(String group);
 
     SystemConfigEntity selectByKeyAndGroup(@Param("configKey") String configKey, @Param("group") String group);
+
+    /**
+     * 根据 key 更新
+     *
+     * @param configEntity
+     * @return
+     */
+    int updateByKey(SystemConfigEntity configEntity);
 }

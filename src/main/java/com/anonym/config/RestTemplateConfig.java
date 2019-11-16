@@ -1,15 +1,13 @@
 package com.anonym.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
-import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContexts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +18,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-
+import javax.net.ssl.SSLContext;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,48 +43,44 @@ public class RestTemplateConfig {
     private Integer connectionRequestTimeout;
 
     @Bean
-    public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
-        return new RestTemplate(factory);
+    public RestTemplate restTemplate(ClientHttpRequestFactory factory, List<HttpMessageConverter<?>> converters) {
+        RestTemplate restTemplate = new RestTemplate(factory);
+        restTemplate.setMessageConverters(converters);
+        return restTemplate;
     }
 
     @Bean
-    public ClientHttpRequestFactory httpRequestFactory() {
-        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient());
-        return factory;
-    }
-
-    /**
-     * fastJsonRestTemplate
-     *
-     * @return
-     */
-    @Bean(name = "fastJsonRestTemplate")
-    public RestTemplate fastJsonRestTemplate() {
-        RestTemplate restTemplate = new RestTemplate(httpRequestFactory());
-
+    public List<HttpMessageConverter<?>> converters() {
+        List<HttpMessageConverter<?>> converters = new ArrayList<>();
         HttpMessageConverter<?> converter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
-
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
         List<MediaType> fastMediaTypes = new ArrayList<>();
         fastMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
         fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
         fastConverter.setSupportedMediaTypes(fastMediaTypes);
-        List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
-        converters.add(1, converter);
+        converters.add(converter);
         converters.add(fastConverter);
-        return restTemplate;
+        return converters;
     }
 
     @Bean
-    public HttpClient httpClient() {
-        Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create().register("http", PlainConnectionSocketFactory.getSocketFactory()).register("https",
-            SSLConnectionSocketFactory.getSocketFactory()).build();
-        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(registry);
-        connectionManager.setMaxTotal(maxTotal);
-        connectionManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
+    public HttpComponentsClientHttpRequestFactory httpClient() {
+        try {
+            TrustStrategy acceptingTrustStrategy = (x509Certificates, authType) -> true;
+            SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+            SSLConnectionSocketFactory connectionSocketFactory = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
 
-        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(socketTimeout).setConnectTimeout(connectTimeout).setConnectionRequestTimeout(connectionRequestTimeout).build();
-        return HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).setConnectionManager(connectionManager).build();
+            HttpClientBuilder httpClientBuilder = HttpClients.custom();
+            httpClientBuilder.setSSLSocketFactory(connectionSocketFactory);
+            CloseableHttpClient httpClient = httpClientBuilder.build();
+            HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+            factory.setHttpClient(httpClient);
+            factory.setConnectTimeout(10 * 1000);
+            factory.setReadTimeout(30 * 1000);
+            return factory;
+        } catch (Exception e) {
+            throw new RuntimeException("创建HttpsRestTemplate失败", e);
+        }
     }
 
 }

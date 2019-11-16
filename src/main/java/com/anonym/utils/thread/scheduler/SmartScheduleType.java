@@ -1,10 +1,5 @@
 package com.anonym.utils.thread.scheduler;
 
-/**
- * 
- * @author jiaozi
- *
- */
 public enum SmartScheduleType {
 
 	/** 定时只调度一次 */

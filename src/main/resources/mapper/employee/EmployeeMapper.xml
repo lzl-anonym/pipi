@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.anonym.module.employee.EmployeeDao">
+<mapper namespace="com.anonym.module.admin.employee.basic.EmployeeDao">
 
-    <resultMap id="EmployeeDTO" type="com.anonym.module.employee.domain.EmployeeDTO"></resultMap>
+
+    <resultMap id="EmployeeDTO"
+               type="com.anonym.module.admin.employee.basic.domain.dto.EmployeeDTO"></resultMap>
+
+    <resultMap id="EmployeeVO"
+               type="com.anonym.module.admin.employee.basic.domain.vo.EmployeeVO"></resultMap>
 
     <sql id="baseSql">
         e.id,
@@ -19,32 +24,37 @@
         e.is_disabled,
         e.remark,
         e.wx_open_id,
+        e.is_delete,
         e.update_time,
         e.create_time
     </sql>
 
-
-    <select id="login" resultMap="EmployeeDTO">
-        SELECT
-        <include refid="baseSql"></include>
-        FROM
-        t_employee e
-        WHERE
-        e.login_name = #{loginName} and e.login_pwd = #{loginPwd}
-    </select>
-
     <select id="selectEmployeeList" resultMap="EmployeeDTO">
         SELECT
         <include refid="baseSql"></include>,
-        d.name AS department_name,
-        tp.name as positionName
+        d.name AS department_name
         FROM
         t_employee e
         LEFT JOIN t_department d ON d.id = e.department_id
-        LEFT JOIN t_position tp ON tp.position_id =e.position_id
         <where>
+            <if test="queryDTO.phone != null and queryDTO.phone != ''">
+                <bind name="likephone" value=" '%' + queryDTO.phone +'%' "></bind>
+                AND e.actual_name like #{likephone}
+            </if>
+            <if test="queryDTO.actualName != null and queryDTO.actualName != ''">
+                <bind name="likeActualName" value=" '%' + queryDTO.actualName +'%' "></bind>
+                AND e.actual_name like #{likeActualName}
+            </if>
             <if test="queryDTO.keyword != null and queryDTO.keyword != ''">
-                AND INSTR(e.actual_name,#{queryDTO.keyword})
+                <bind name="likeName" value=" '%' + queryDTO.keyword +'%' "></bind>
+                AND (e.actual_name like #{likeName} or e.nick_name like #{likeName} or e.phone like #{likeName})
+            </if>
+
+            <if test="queryDTO.departmentId != null">
+                AND e.department_id = #{queryDTO.departmentId}
+            </if>
+            <if test="queryDTO.isLeave != null">
+                AND e.is_leave = #{queryDTO.isLeave}
             </if>
             <if test="queryDTO.isDisabled != null">
                 AND e.is_disabled = #{queryDTO.isDisabled}
@@ -52,8 +62,11 @@
             <if test="queryDTO.isDelete != null">
                 AND e.is_delete = #{queryDTO.isDelete}
             </if>
-            <if test="queryDTO.departmentId != null">
-                AND e.department_id = #{queryDTO.departmentId}
+            <if test="queryDTO.employeeIds != null and queryDTO.employeeIds.size > 0">
+                AND e.id IN
+                <foreach collection="queryDTO.employeeIds" open="(" close=")" item="item" separator=",">
+                    #{item}
+                </foreach>
             </if>
         </where>
         order by e.create_time desc
@@ -68,6 +81,15 @@
             #{item}
         </foreach>
     </update>
+
+    <select id="login" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_employee e
+        WHERE
+        e.login_name = #{loginName} and e.login_pwd = #{loginPwd}
+    </select>
 
 
     <select id="getByLoginName" resultMap="EmployeeDTO">
@@ -86,7 +108,7 @@
         FROM
         t_employee e
         WHERE
-        e.phone = #{phone} and e.is_disabled = #{isDisabled}
+        e.login_name = #{phone} and e.is_disabled = #{isDisabled}
     </select>
 
 
@@ -108,7 +130,7 @@
     </select>
 
 
-    <select id="getEmployeeIdByDeptId" resultMap="EmployeeDTO">
+    <select id="getEmployeeIdByDeptId" resultMap="EmployeeVO">
         SELECT
         <include refid="baseSql"></include>
         FROM
@@ -138,10 +160,19 @@
         FROM
         t_employee e
         where e.id IN
-        <foreach collection="ids" item="item" separator="," open="(" close=")">
+        <foreach collection="ids" item="item" separator=",">
             #{item}
         </foreach>
         order by e.create_time desc
+    </select>
+
+
+    <select id="getEmployeeById" resultMap="EmployeeDTO">
+        SELECT
+        <include refid="baseSql"></include>
+        FROM
+        t_employee e
+        where e.id = #{id}
     </select>
 
     <update id="updatePassword">
@@ -150,83 +181,42 @@
         WHERE id = #{employeeId}
     </update>
 
-    <select id="getByPositionId" resultMap="EmployeeDTO">
-        SELECT
-        <include refid="baseSql"></include>,
-        d.name AS department_name,
-        tp.name as positionName
-        FROM
-        t_employee e
-        LEFT JOIN t_department d ON d.id = e.department_id
-        LEFT JOIN t_position tp ON tp.position_id =e.position_id
-        where e.position_id = #{positionId}
-    </select>
-
-    <!-- 根据 员工编号 批量查询员工数据 -->
-    <select id="listByEmployeeNumber" resultType="com.anonym.module.employee.domain.EmployeeEntity">
-        SELECT id,oa_number
-        FROM t_employee
-        WHERE oa_number IN
-        <foreach collection="list" item="item" separator="," open="(" close=")">
-            #{item}
-        </foreach>
-    </select>
-
-    <insert id="batchInsert">
-        <foreach collection="list" item="entity" index="item" separator=";">
-            INSERT INTO t_employee(
-            id,
-            login_name,
-            login_pwd,
-            actual_name,
-            phone,
-            department_id,
-            is_leave,
-            is_disabled,
-            create_user,
-            update_time
-            )VALUES (
-            #{entity.id},
-            #{entity.loginName},
-            #{entity.loginPwd},
-            #{entity.actualName},
-            #{entity.phone},
-            #{entity.departmentId},
-            #{entity.isLeave},
-            #{entity.isDisabled},
-            #{entity.createUser},
-            #{entity.updateTime}
-            )
-        </foreach>
+    <insert id="insertEmployee" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO t_employee
+        (login_name,
+        login_pwd,
+        actual_name,
+        department_id,
+        is_leave,
+        is_disabled,
+        create_user,
+        is_delete,
+        phone
+        )VALUES(
+        #{loginName},
+        #{loginPwd},
+        #{actualName},
+        #{departmentId},
+        #{isLeave},
+        #{isDisabled},
+        #{createUser},
+        #{isDelete},
+        #{phone}
+        )
     </insert>
 
-    <update id="batchUpdate">
-        <foreach collection="list" item="entity" index="item" separator=";">
-            UPDATE t_employee SET
-            login_name = #{entity.loginName},
-            actual_name = #{entity.actualName},
-            phone = #{entity.phone},
-            department_id = #{entity.departmentId},
-            is_leave = #{entity.isLeave},
-            is_disabled = #{entity.isDisabled},
-            update_time = #{entity.updateTime}
-            WHERE
-            id = #{entity.id}
+    <select id="selectByEmployeeIds"
+            resultType="com.anonym.module.admin.employee.basic.domain.entity.EmployeeEntity">
+        SELECT
+        id,
+        actual_name
+        FROM
+        t_employee
+        WHERE
+        id IN
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
         </foreach>
-    </update>
-
-    <select id="selectListByLoginNameList"
-            resultType="com.anonym.module.employee.domain.EmployeeEntity">
-        SELECT id,login_name,phone FROM t_employee
-        <where>
-            is_disabled = #{status}
-            <if test="list != null and list.size()>0">
-                AND phone IN
-                <foreach collection="list" item="phone" index="item" separator="," open="(" close=")">
-                    #{phone}
-                </foreach>
-            </if>
-        </where>
     </select>
 
 

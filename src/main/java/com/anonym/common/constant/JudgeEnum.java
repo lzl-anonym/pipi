@@ -6,16 +6,12 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * 是与否 判断
+ * [ 是与否]
  */
 public enum JudgeEnum implements BaseEnum {
-    /**
-     * 否
-     */
+
     NO(0, "否"),
-    /**
-     * 是
-     */
+
     YES(1, "是");
 
     private Integer value;

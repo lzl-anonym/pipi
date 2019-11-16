@@ -1,13 +1,15 @@
 package com.anonym.common.constant;
 
-import com.anonym.common.token.TokenCommonResponseCodeConst;
-import com.anonym.module.department.DepartmentResponseCodeConst;
-import com.anonym.module.employee.EmployeeResponseCodeConst;
-import com.anonym.module.privilege.constant.PrivilegeResponseCodeConst;
-import com.anonym.module.role.RoleResponseCodeConst;
+import com.anonym.module.admin.department.DepartmentResponseCodeConst;
+import com.anonym.module.admin.employee.EmployeeResponseCodeConst;
+import com.anonym.module.admin.position.PositionResponseCodeConst;
+import com.anonym.module.admin.privilege.constant.PrivilegeResponseCodeConst;
+import com.anonym.module.admin.role.basic.RoleResponseCodeConst;
+import com.anonym.module.file.constant.FileResponseCodeConst;
+import com.anonym.module.log.orderoperatelog.constant.OrderOperateLogOperateTypeConst;
 import com.anonym.module.systemconfig.constant.SystemConfigResponseCodeConst;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.anonym.module.user.UserResponseCodeConst;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -16,27 +18,23 @@ import java.util.Map;
 /**
  * 每个业务，100个范围值就够了.
  */
+@Slf4j
 public class ResponseCodeConst {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ResponseCodeConst.class);
 
     // 范围声明
     static {
         // 系统功能，从0开始，step=1000
-        ResponseCodeContainer.register(ResponseCodeConst.class, 0, 999);
-        ResponseCodeContainer.register(TokenCommonResponseCodeConst.class, 1000, 1099);
-
-        ResponseCodeContainer.register(RoleResponseCodeConst.class, 1100, 1199);
-        ResponseCodeContainer.register(EmployeeResponseCodeConst.class, 1200, 1299);
-
-        ResponseCodeContainer.register(DepartmentResponseCodeConst.class, 1300, 1399);
-
-        ResponseCodeContainer.register(PrivilegeResponseCodeConst.class, 1400, 1499);
-        ResponseCodeContainer.register(SystemConfigResponseCodeConst.class, 1500, 1599);
-
-
-
-
+        ResponseCodeContainer.register(ResponseCodeConst.class, 0, 1000);
+        ResponseCodeContainer.register(DepartmentResponseCodeConst.class, 2001, 2999);
+        ResponseCodeContainer.register(EmployeeResponseCodeConst.class, 3001, 3999);
+        ResponseCodeContainer.register(FileResponseCodeConst.class, 4001, 4999);
+        ResponseCodeContainer.register(SystemConfigResponseCodeConst.class, 5001, 5999);
+        ResponseCodeContainer.register(RoleResponseCodeConst.class, 6001, 6999);
+        ResponseCodeContainer.register(PrivilegeResponseCodeConst.class, 7001, 7999);
+        ResponseCodeContainer.register(OrderOperateLogOperateTypeConst.class, 8001, 8999);
+        ResponseCodeContainer.register(PositionResponseCodeConst.class, 13000, 13999);
+        // 用户
+        ResponseCodeContainer.register(UserResponseCodeConst.class, 14000, 14500);
 
 
     }
@@ -45,11 +43,11 @@ public class ResponseCodeConst {
 
     public static final ResponseCodeConst COMMON_ERROR = new ResponseCodeConst(2, "我错了....");
 
-    public static final ResponseCodeConst ERROR_PARAM = new ResponseCodeConst(101, "参数异常！");
+    public static final ResponseCodeConst ERROR_PARAM = new ResponseCodeConst(101, "参数异常");
 
     public static final ResponseCodeConst ERROR_PARAM_ANY = new ResponseCodeConst(102, "%s参数异常！");
 
-    public static final ResponseCodeConst SYSTEM_ERROR = new ResponseCodeConst(111, "系统错误");
+    public static final ResponseCodeConst SYSTEM_ERROR = new ResponseCodeConst(111, "系统繁忙，请稍后重试");
 
     public static final ResponseCodeConst DEVELOPMENT = new ResponseCodeConst(112, "此功能正在开发中");
 
@@ -57,7 +55,13 @@ public class ResponseCodeConst {
 
     public static ResponseCodeConst REQUEST_METHOD_ERROR = new ResponseCodeConst(114, "请求方式错误");
 
-    public static ResponseCodeConst JSON_FORMAT_ERROR = new ResponseCodeConst(115, "JSON格式错误");
+    public static ResponseCodeConst JSON_FORMAT_ERROR = new ResponseCodeConst(115, "不要怀疑，是前端的JSON格式错误");
+
+    public static ResponseCodeConst PERMISSION_DENIED = new ResponseCodeConst(116, "没有权限修改该单据");
+
+    public static ResponseCodeConst AlREADY_EXIT = new ResponseCodeConst(117, "数据已存在");
+
+    public static ResponseCodeConst STATUS_ERROR = new ResponseCodeConst(118, "数据状态异常");
 
     protected int code;
 
@@ -114,7 +118,7 @@ public class ResponseCodeConst {
     }
 
     public static void init() {
-        LOG.info("ResponseCodeConst init....");
+        log.info("ResponseCodeConst init....");
     }
 
     // =======================分割=======================
@@ -124,9 +128,8 @@ public class ResponseCodeConst {
      *
      * @author Anders
      */
+    @Slf4j
     private static class ResponseCodeContainer {
-
-        private static final Logger LOG = LoggerFactory.getLogger(ResponseCodeConst.class);
 
         private static final Map<Integer, ResponseCodeConst> RESPONSE_CODE_MAP = new HashMap<>();
 
@@ -162,7 +165,7 @@ public class ResponseCodeConst {
                 try {
                     fields[0].get(clazz);
                 } catch (IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
+                    log.error("", e);
                 }
             }
         }
@@ -177,7 +180,7 @@ public class ResponseCodeConst {
                 throw new IllegalArgumentException(String.format("<ResponseDTO> Id(%d) out of range[%d,%d], " + "class:%s", code, idRange[0], idRange[1], codeConst.getClass().getSimpleName()));
             }
             if (RESPONSE_CODE_MAP.keySet().contains(code)) {
-                LOG.error(String.format("<ResponseDTO> Id(%d) out of range[%d,%d], " + "class:%s  code is repeat!", code, idRange[0], idRange[1], codeConst.getClass().getSimpleName()));
+                log.error(String.format("<ResponseDTO> Id(%d) out of range[%d,%d], " + "class:%s  code is repeat!", code, idRange[0], idRange[1], codeConst.getClass().getSimpleName()));
                 System.exit(0);
             }
             RESPONSE_CODE_MAP.put(code, codeConst);

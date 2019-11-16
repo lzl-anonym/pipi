@@ -11,8 +11,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  * 特点：按数据接收顺序处理，但对于同一K值的V数据处理，既保证顺序，也是线程安全的<BR>
  * <B>要求：一个V对象唯一对应一个键值</B><BR>
  * 功能类似扩展线程的处理，实现参考引擎的ServerWriter
- *
- * @author jiaozi
  */
 public class SmartMultiThreadQueueWorker<K, V> implements ISmartControl {
 

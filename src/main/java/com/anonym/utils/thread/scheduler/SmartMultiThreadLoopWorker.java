@@ -10,8 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 多线程数据定时循环处理器<BR>
  * 可以通过参数的调整，调整适宜的线程数处理数据
- *
- * @author jiaozi
  */
 public class SmartMultiThreadLoopWorker<K, V> implements ISmartControl {
 

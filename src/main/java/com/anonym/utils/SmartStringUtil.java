@@ -9,8 +9,6 @@ import java.util.Set;
 
 /**
  * 字符串操作类，包括分割，转换，大写首字母
- *
- * @author jiaozi
  */
 public class SmartStringUtil extends StringUtils {
 
