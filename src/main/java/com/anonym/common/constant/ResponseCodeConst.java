@@ -6,6 +6,7 @@ import com.anonym.module.admin.position.PositionResponseCodeConst;
 import com.anonym.module.admin.privilege.constant.PrivilegeResponseCodeConst;
 import com.anonym.module.admin.role.basic.RoleResponseCodeConst;
 import com.anonym.module.file.constant.FileResponseCodeConst;
+import com.anonym.module.fuseuser.FaceFuseResponseCodeConst;
 import com.anonym.module.log.orderoperatelog.constant.OrderOperateLogOperateTypeConst;
 import com.anonym.module.systemconfig.constant.SystemConfigResponseCodeConst;
 import com.anonym.module.user.UserResponseCodeConst;
@@ -35,6 +36,8 @@ public class ResponseCodeConst {
         ResponseCodeContainer.register(PositionResponseCodeConst.class, 13000, 13999);
         // 用户
         ResponseCodeContainer.register(UserResponseCodeConst.class, 14000, 14500);
+
+        ResponseCodeContainer.register(FaceFuseResponseCodeConst.class, 15000, 15100);
 
 
     }

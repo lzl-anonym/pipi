@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anonym.module.fuseuser.record.FaceFuseRecordDao">
+
+    <resultMap id="faceFuseRecordVO" type="com.anonym.module.fuseuser.record.domain.FaceFuseRecordVO"></resultMap>
+
+
+    <select id="queryByPage" resultMap="faceFuseRecordVO">
+        SELECT
+            r.face_fuse_user_id,
+            r.create_time,
+            u.phone
+        FROM
+            t_face_fuse_record r
+            LEFT JOIN t_face_fuse_user u ON u.face_fuse_user_id = r.face_fuse_user_id
+        ORDER BY
+            r.create_time DESC
+    </select>
+</mapper>

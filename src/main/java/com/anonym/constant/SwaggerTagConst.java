@@ -1,7 +1,6 @@
 package com.anonym.constant;
 
 
-
 public class SwaggerTagConst {
 
     public static class Admin {
@@ -70,6 +69,9 @@ public class SwaggerTagConst {
 
         public static final String RED_ENVELOP = "管理端-红包业务";
 
+        public static final String FACE_FUSE_RECORD = "管理端-融合业务";
+
+
     }
 
     /**
@@ -120,6 +122,8 @@ public class SwaggerTagConst {
         public static final String RED_ENVELOP = "红包";
 
         public static final String FACE_FUSE = "融合服务";
+
+        public static final String FACE_FUSE_RECORD = "参与记录（融合服务）";
 
 
     }

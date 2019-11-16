@@ -1,4 +1,4 @@
-package com.anonym.module.face;
+package com.anonym.module.fuseuser.fuse.domian;
 
 import lombok.Data;
 
