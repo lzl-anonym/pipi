@@ -9,6 +9,8 @@ import com.anonym.module.fuseuser.domain.FaceFuseUserEntity;
 import com.anonym.module.fuseuser.fuse.domian.FaceFuseAddDTO;
 import com.anonym.module.fuseuser.fuse.domian.FaceFuseDao;
 import com.anonym.module.fuseuser.fuse.domian.FaceFuseEntity;
+import com.anonym.module.fuseuser.record.FaceFuseRecordDao;
+import com.anonym.module.fuseuser.record.domain.FaceFuseRecordEntity;
 import com.anonym.module.user.basic.domain.UserDTO;
 import com.anonym.module.user.basic.domain.UserLoginVO;
 import com.anonym.module.user.login.UserLoginService;
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -48,6 +51,9 @@ public class FaceFuseService {
 
     private static String CLAIM_ID_KEY = "id";
 
+    @Autowired
+    private FaceFuseRecordDao faceFuseRecordDao;
+
     @Value("${jwt.key}")
     private String jwtKey;
 
@@ -72,11 +78,6 @@ public class FaceFuseService {
      * 融合图片 api
      */
     public static final String MERGE_FACE_API = "https://aip.baidubce.com/rest/2.0/face/v1/merge";
-
-    /**
-     * 获取Access Token
-     */
-    public static final String GET_TOKEN = "https://aip.baidubce.com/oauth/2.0/token";
 
 
     /**
@@ -150,8 +151,9 @@ public class FaceFuseService {
      * @param addDTO
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public ResponseDTO addFaceFuse(FaceFuseAddDTO addDTO, Long userId) {
-        // 1.准备工作
+        // 1.调用百度接口
         ResponseDTO responseDTO = this.faceMerge(addDTO);
         if (!responseDTO.isSuccess()) {
             return responseDTO;
@@ -160,13 +162,19 @@ public class FaceFuseService {
         String data = (String) responseDTO.getData();
         com.alibaba.fastjson.JSONObject jsonObject = com.alibaba.fastjson.JSONObject.parseObject(data);
         String mergeImage = jsonObject.getString("result");
+        com.alibaba.fastjson.JSONObject tar = com.alibaba.fastjson.JSONObject.parseObject(mergeImage);
+        String str = tar.getString("merge_image");
         FaceFuseEntity entity = new FaceFuseEntity();
         entity.setFaceFuseUserId(userId.intValue());
-        entity.setMergeImage(mergeImage);
+        entity.setMergeImage(str);
 
         faceFuseDao.insert(entity);
 
         // 3.插入参与记录
+        FaceFuseRecordEntity faceFuseRecordEntity = new FaceFuseRecordEntity();
+        faceFuseRecordEntity.setFaceFuseUserId(userId.intValue());
+
+        faceFuseRecordDao.insert(faceFuseRecordEntity);
 
         return ResponseDTO.succ();
     }
@@ -243,8 +251,7 @@ public class FaceFuseService {
 
             String param = GsonUtils.toJson(map);
 
-            // 注意这里仅为了简化编码每一次请求都去获取access_token，线上环境access_token有过期时间， 客户端可自行缓存，过期后重新获取。
-//            String accessToken = "[调用鉴权接口获取的token]";
+            // access_token有过期时间  这里每次都重新请求
             ResponseDTO tokenRes = this.getAccessToken();
             if (!tokenRes.isSuccess()) {
                 // 获取token失败
