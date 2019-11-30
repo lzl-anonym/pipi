@@ -50,7 +50,7 @@ public class SystemConfigService {
         }
         systemConfigMap.clear();
         entityList.forEach(entity -> this.systemConfigMap.put(entity.getConfigKey().toLowerCase(), entity));
-        log.info("系统设置缓存初始化完毕:{}", systemConfigMap.size());
+        log.info("系统配置缓存初始化完毕:{}", systemConfigMap.size());
     }
 
     /**
