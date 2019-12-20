@@ -125,6 +125,8 @@ public class SwaggerTagConst {
 
         public static final String FACE_FUSE_RECORD = "参与记录（融合服务）";
 
+        public static final String MESSAGE = "留言业务";
+
 
     }
 

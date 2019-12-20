@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anonym.module.message.MessageDao">
+
+    <resultMap id="MessageEntity" type="com.anonym.module.message.domain.entity.MessageEntity"></resultMap>
+
+
+    <select id="queryByPage" resultMap="MessageEntity">
+        select
+        message_id,
+        message_type,
+        content,
+        picture,
+        user_id,
+        user_name,
+        delete_flag,
+        create_time,
+        update_time
+        from t_message
+        <where>
+            <if test="queryDTO.startDate != null and queryDTO.startDate != ''">
+                AND DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= #{queryDTO.startDate}
+            </if>
+            <if test="queryDTO.endDate != null and queryDTO.endDate != ''">
+                AND DATE_FORMAT(create_time, '%Y-%m-%d') &lt;= #{queryDTO.endDate}
+            </if>
+            <if test="queryDTO.content != null and queryDTO.content != ''">
+                AND INSTR(content,#{queryDTO.content})
+            </if>
+            <if test="queryDTO.messageType != null ">
+                AND message_type = #{queryDTO.messageType}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById">
+        delete from t_message where id = #{id}
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from t_message where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>
