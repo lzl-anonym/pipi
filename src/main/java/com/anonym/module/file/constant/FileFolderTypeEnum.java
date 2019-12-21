@@ -9,36 +9,36 @@ import com.anonym.constant.CommonConst;
 public enum FileFolderTypeEnum implements BaseEnum {
 
     /**
-     * 轮播展示图
+     * 留言图片
      */
-    DISPLAY_PIC(1, CommonConst.FileService.FOLDER_PUBLIC + "/display-pic/", "轮播展示图"),
+    MESSAGE(1, CommonConst.FileService.FOLDER_PUBLIC + "/message-pic/", "留言上传的图片");
 
     /**
      * 商城图片
      */
-    MARKET(2, CommonConst.FileService.FOLDER_PUBLIC + "/market/", "商城图片"),
+//    MARKET(2, CommonConst.FileService.FOLDER_PUBLIC + "/market/", "商城图片"),
 
     /**
      * 旅拍图片
      */
-    ARTICLE(3, CommonConst.FileService.FOLDER_PUBLIC + "/article/", "旅拍图片"),
+//    ARTICLE(3, CommonConst.FileService.FOLDER_PUBLIC + "/article/", "旅拍图片"),
 
     /**
      * 用户反馈图片
      */
-    FEEDBACK(4, CommonConst.FileService.FOLDER_PUBLIC + "/feedback/", "用户反馈图片"),
+//    FEEDBACK(4, CommonConst.FileService.FOLDER_PUBLIC + "/feedback/", "用户反馈图片"),
 
     /**
      * 路线图片
      */
-    ROUTE(5, CommonConst.FileService.FOLDER_PUBLIC + "/route/", "路线图片"),
+//    ROUTE(5, CommonConst.FileService.FOLDER_PUBLIC + "/route/", "路线图片"),
 
     /**
      * 商品评价图片文件夹
      */
-    GOODS_ASSESS(6, CommonConst.FileService.FOLDER_PUBLIC + "/assess/", "商品评价图片文件夹");
+//    GOODS_ASSESS(6, CommonConst.FileService.FOLDER_PUBLIC + "/assess/", "商品评价图片文件夹");
 
-    public static final String INFO = "1轮播展示图，2商城图片 3旅拍 4用户反馈图片 5路线图片 6商品评价图片";
+    public static final String INFO = "1留言图片 ";
 
     private Integer value;
 

@@ -33,6 +33,8 @@ public class FileController extends CommonBaseController {
     @Autowired
     private FileService fileService;
 
+    @AdminAuthorityLevel
+    @AppAuthorityLevel
     @ApiOperation(value = "文件上传", notes = FileFolderTypeEnum.INFO)
     @PostMapping("/file/upload/{folder}")
     public ResponseDTO<UploadVO> upload(MultipartFile file, @PathVariable Integer folder) {
