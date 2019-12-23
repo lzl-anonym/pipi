@@ -55,7 +55,7 @@ public class MessageAppController extends AppBaseController {
         return messageService.delete(id);
     }*/
 
-
+    @AppAuthorityLevel
     @ApiOperation("留言详情 @author lizongliang")
     @GetMapping("/message/detail/{messageId}")
     public ResponseDTO<MessageAppVO> detail(@PathVariable Long messageId) {

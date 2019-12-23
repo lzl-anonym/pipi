@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author lizongliang
  * @date 2019-12-20 18:48
@@ -49,6 +51,9 @@ public class MessageEntity {
      * 删除状态  true删除  false不删除
      */
     private Boolean deleteFlag;
+    private Date updateTime;
+
+    private Date createTime;
 
 
 }
