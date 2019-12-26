@@ -44,14 +44,12 @@ public class AppAuthorityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //跨域设置
         this.crossDomainConfig(response);
         boolean isHandler = handler instanceof HandlerMethod;
         if (!isHandler) {
             return true;
         }
 
-        //放行的Uri前缀
         String uri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String target = uri.replaceFirst(contextPath, "");
@@ -59,24 +57,20 @@ public class AppAuthorityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        // 检查是否包含 token
         String xHeaderToken = request.getHeader(TOKEN_NAME);
         String xRequestToken = request.getParameter(TOKEN_NAME);
         String xAccessToken = null != xHeaderToken ? xHeaderToken : xRequestToken;
         UserDTO userTokenInfo = null;
         if (null != xAccessToken) {
-            // 包含token 则获取用户信息 并保存
             userTokenInfo = userLoginService.getUserTokenInfo(xAccessToken);
             this.setRequestUser(userTokenInfo, request);
         }
 
-        //不需要登录
         AppAuthorityLevel appAuthorityLevel = ((HandlerMethod) handler).getMethodAnnotation(AppAuthorityLevel.class);
         if (null != appAuthorityLevel && appAuthorityLevel.level() == AppAuthorityLevel.LOW) {
             return true;
         }
 
-        //需要做 token 校验, 消息头的token优先于请求query参数的token
         if (null == xAccessToken || null == userTokenInfo) {
             this.outputResult(response, UserResponseCodeConst.LOGIN_ERROR);
             return false;
@@ -95,11 +89,6 @@ public class AppAuthorityInterceptor extends HandlerInterceptorAdapter {
         SmartRequestTokenUtil.setUser(request, tokenDTO);
     }
 
-    /**
-     * 配置跨域
-     *
-     * @param response
-     */
     private void crossDomainConfig(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", accessControlAllowOrigin);
         response.setHeader("Access-Control-Allow-Credentials", "true");
@@ -111,13 +100,6 @@ public class AppAuthorityInterceptor extends HandlerInterceptorAdapter {
         response.setHeader("Expires ", "-1");
     }
 
-    /**
-     * 错误输出
-     *
-     * @param response
-     * @param responseCodeConst
-     * @throws IOException
-     */
     private void outputResult(HttpServletResponse response, UserResponseCodeConst responseCodeConst) throws IOException {
         ResponseDTO<Object> wrap = ResponseDTO.wrap(responseCodeConst);
         String msg = JSONObject.toJSONString(wrap);

@@ -5,9 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Set;
 
-/**
- * [ 通用常量 ]
- */
+
 public class CommonConst {
 
     /**
@@ -112,7 +110,7 @@ public class CommonConst {
 
         public static final String DEFAULT = "123456";
 
-        public static final String SALT_FORMAT = "listen_%s_1015";
+        public static final String SALT_FORMAT = "pipi_%s_1015";
     }
 
     public static final String IGNORE_H5_URL_MAPPING = "/h5/api";

@@ -8,9 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
 
-/**
- * java8 localDate 时间类格式化配置
- */
+
 @Configuration
 public class LocalDateTimeSerializerConfig {
 

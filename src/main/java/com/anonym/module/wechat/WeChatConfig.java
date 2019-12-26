@@ -4,49 +4,31 @@ import com.anonym.common.domain.BaseEnum;
 
 import java.util.HashMap;
 
-/**
- * 微信常量配置类
- */
+
 public class WeChatConfig {
 
-    /**
-     * 微信小程序 app id
-     */
-    public static final String MINI_APP_ID = "wx45f66d1526dcd06f";
 
-    /**
-     * 微信小程序 app secret
-     */
-    public static final String MINI_APP_SECRET = "06a9578a514d202bb46ba11acc5f5c62";
+    public static final String MINI_APP_ID = "";
 
-    /**
-     * 微信支付 商户id 河南品讯网络科技有限公司
-     */
-    public static final String PAYMENT_MERCHANT_ID = "1560832731";
 
-    /**
-     * 微信支付 商户密钥 key
-     */
-    public static final String PAYMENT_MERCHANT_SECRET_KEY = "EI87s7AayycjDxv43gdi5gpbK6KoYTxv";
+    public static final String MINI_APP_SECRET = "";
 
-    /**
-     * 微信支付 app 名称
-     */
-    public static final String PAYMENT_APP_NAME = "享游购";
 
-    /**
-     * 微信支付 通信成功状态码code
-     */
+    public static final String PAYMENT_MERCHANT_ID = "";
+
+
+    public static final String PAYMENT_MERCHANT_SECRET_KEY = "";
+
+
+    public static final String PAYMENT_APP_NAME = "";
+
+
     public static final String PAYMENT_RETURN_CODE = "SUCCESS";
 
-    /**
-     * 小程序推送自定义 token
-     */
-    public static final String MSG_TOKEN = "xyly";
 
-    /**
-     * 微信access token失效时间 /秒
-     */
+    public static final String MSG_TOKEN = "";
+
+
     public static final int TOKEN_INVALID_SECOND = 7200;
 
     public static final int SUCCESS_CODE = 0;
@@ -62,14 +44,7 @@ public class WeChatConfig {
         codeMap.put(45011, "您的频率太快了，请稍候重试");
     }
 
-    /**
-     * 根据微信code 获取错误信息
-     * 未知code，则原样返回err msg
-     *
-     * @param errCode
-     * @param errMsg
-     * @return
-     */
+
     public static String getErrorMsg(Integer errCode, String errMsg) {
         String msg = codeMap.get(errCode);
         return null == msg ? errMsg : msg;
@@ -77,46 +52,29 @@ public class WeChatConfig {
 
     public class URL {
 
-        /**
-         * 获取 小程序 登录信息 URL
-         */
+
         public static final String MINI_LOGIN = "https://api.weixin.qq.com/sns/jscode2session?appid=" + MINI_APP_ID + "&secret=" + MINI_APP_SECRET + "&js_code={1}&grant_type=authorization_code";
 
-        /**
-         * 查询全局 access token
-         */
+
         public static final String GLOBAL_ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + MINI_APP_ID + "&secret=" + MINI_APP_SECRET;
 
-        /**
-         * 微信支付：统一下单 获取预支付交易单
-         */
+
         public static final String PAYMENT_GET_PREPAY_ORDER = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
-        /**
-         * 微信支付：微信支付订单的查询
-         */
+
         public static final String PAYMENT_QUERY_ORDER = "https://api.mch.weixin.qq.com/pay/orderquery";
 
-        /**
-         * 微信支付：关闭订单
-         */
+
         public static final String PAYMENT_CLOSE_ORDER = "https://api.mch.weixin.qq.com/pay/closeorder";
 
-        /**
-         * 微信支付：申请退款接口
-         */
         public static final String PAYMENT_APPLY_REFUND = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 
-        /**
-         * 微信支付：查询退款状态
-         */
+
         public static final String PAYMENT_QUERY_REFUND = "https://api.mch.weixin.qq.com/pay/refundquery";
 
     }
 
-    /**
-     * 微信支付状态 枚举类
-     */
+
     public enum PaymentStateEnum implements BaseEnum {
 
         /**

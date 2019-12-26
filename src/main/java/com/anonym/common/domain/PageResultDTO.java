@@ -5,9 +5,7 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- * Page返回对象
- */
+
 @Data
 public class PageResultDTO<T> {
 

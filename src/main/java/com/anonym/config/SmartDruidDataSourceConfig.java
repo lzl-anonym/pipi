@@ -23,9 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * [ 数据源配置 ]
- */
+
 @Slf4j
 @Configuration
 public class SmartDruidDataSourceConfig {

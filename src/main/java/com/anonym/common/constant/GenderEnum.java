@@ -2,9 +2,7 @@ package com.anonym.common.constant;
 
 import com.anonym.common.domain.BaseEnum;
 
-/**
- * description
- */
+
 public enum GenderEnum implements BaseEnum {
 
 

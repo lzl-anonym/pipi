@@ -169,12 +169,7 @@ public class EmployeeService {
         if (null == entity) {
             return ResponseDTO.wrap(EmployeeResponseCodeConst.EMP_NOT_EXISTS);
         }
-        //--产品要求此处不需要判断，前端绑定商家，提示该手机号对应账号，已被禁用，无法绑定即可
-        //1.禁用，需判断是否关联店铺，如果关联店铺，需判断店铺是否处于禁用状态，如果非禁用状态,则不能禁用该账户
-//        ShopEntity shopEntity = shopDao.selectShopByManagerId(employeeId);
-//        if (shopEntity != null && shopEntity.getEnableFlag()) {
-//            return ResponseDTO.wrap(EmployeeResponseCodeConst.NOT_ALLOW_ENABLE_STOP);
-//        }
+
 
         List<Long> empIds = Lists.newArrayList();
         empIds.add(employeeId);

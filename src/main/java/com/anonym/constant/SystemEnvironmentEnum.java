@@ -2,9 +2,7 @@ package com.anonym.constant;
 
 import com.anonym.common.domain.BaseEnum;
 
-/**
- * 系统环境枚举类
- */
+
 public enum SystemEnvironmentEnum implements BaseEnum {
 
     /**

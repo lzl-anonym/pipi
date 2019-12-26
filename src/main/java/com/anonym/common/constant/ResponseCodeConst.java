@@ -16,9 +16,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 每个业务，100个范围值就够了.
- */
+
 @Slf4j
 public class ResponseCodeConst {
 

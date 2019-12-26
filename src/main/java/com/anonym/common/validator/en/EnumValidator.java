@@ -6,9 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 
-/**
- * 枚举类校验器
- */
+
 public class EnumValidator implements ConstraintValidator<CheckEnum, Object> {
 
     /**

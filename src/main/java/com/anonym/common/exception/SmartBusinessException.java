@@ -1,8 +1,5 @@
 package com.anonym.common.exception;
 
-/**
- * [ 业务逻辑异常,全局异常拦截后统一返回ResponseCodeConst.SYSTEM_ERROR ]
- */
 public class SmartBusinessException extends RuntimeException {
 
     public SmartBusinessException() {

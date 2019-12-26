@@ -37,9 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/**
- * [ 根据SwaggerTagConst内部类动态生成Swagger group ]
- */
+
 @Slf4j
 @EnableSwagger2
 @Configuration

@@ -9,9 +9,6 @@ import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
-/**
- * 是否是正式环境
- */
 @Configuration
 public class SystemEnvironmentCondition implements Condition {
 

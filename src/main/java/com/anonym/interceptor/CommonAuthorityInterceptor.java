@@ -21,9 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * 公用api 拦截器
- */
 @Component
 public class CommonAuthorityInterceptor extends HandlerInterceptorAdapter {
 
@@ -49,7 +46,6 @@ public class CommonAuthorityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //跨域设置
         this.crossDomainConfig(response);
 
         boolean isHandler = handler instanceof HandlerMethod;
@@ -57,7 +53,6 @@ public class CommonAuthorityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        //不需要登录
         AppAuthorityLevel appAuthorityLevel = ((HandlerMethod) handler).getMethodAnnotation(AppAuthorityLevel.class);
         if (null != appAuthorityLevel && appAuthorityLevel.level() == AppAuthorityLevel.LOW) {
             return true;
@@ -68,7 +63,6 @@ public class CommonAuthorityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        //放行的Uri前缀
         String uri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String target = uri.replaceFirst(contextPath, "");
@@ -76,7 +70,6 @@ public class CommonAuthorityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        //需要做token校验, 消息头的token优先于请求query参数的token
         String xHeaderToken = request.getHeader(TOKEN_NAME);
         String xRequestToken = request.getParameter(TOKEN_NAME);
         String xAccessToken = null != xHeaderToken ? xHeaderToken : xRequestToken;
@@ -85,7 +78,6 @@ public class CommonAuthorityInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
 
-        //根据token获取登录用户 或 后管用户
         UserDTO userToken = userLoginService.getUserTokenInfo(xAccessToken);
         LoginTokenDTO employeeToken = employeeLoginTokenService.getEmployeeTokenInfo(xAccessToken);
         if (null == userToken && null == employeeToken) {
@@ -105,11 +97,6 @@ public class CommonAuthorityInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    /**
-     * 配置跨域
-     *
-     * @param response
-     */
     private void crossDomainConfig(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", accessControlAllowOrigin);
         response.setHeader("Access-Control-Allow-Credentials", "true");
@@ -121,13 +108,6 @@ public class CommonAuthorityInterceptor extends HandlerInterceptorAdapter {
         response.setHeader("Expires ", "-1");
     }
 
-    /**
-     * 错误输出
-     *
-     * @param response
-     * @param responseCodeConst
-     * @throws IOException
-     */
     private void outputResult(HttpServletResponse response, UserResponseCodeConst responseCodeConst) throws IOException {
         ResponseDTO<Object> wrap = ResponseDTO.wrap(responseCodeConst);
         String msg = JSONObject.toJSONString(wrap);

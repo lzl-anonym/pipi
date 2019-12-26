@@ -15,9 +15,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * 微信小程序 业务类
- */
+
 @Slf4j
 @Service
 public class WeChatMiniService {
@@ -25,12 +23,7 @@ public class WeChatMiniService {
     @Autowired
     private WeChatBaseService weChatBaseService;
 
-    /**
-     * 微信小程序登录
-     *
-     * @param code
-     * @return
-     */
+
     public ResponseDTO<WeChatLoginResultDTO> loginByCode(String code) {
 
         ResponseDTO responseDTO = weChatBaseService.sendGetRequest(WeChatConfig.URL.MINI_LOGIN, code);

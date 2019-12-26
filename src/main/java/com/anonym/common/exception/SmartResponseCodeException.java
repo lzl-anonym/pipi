@@ -1,8 +1,5 @@
 package com.anonym.common.exception;
 
-/**
- * [ 全局异常拦截后保留ResponseCode码的异常]
- */
 public class SmartResponseCodeException extends RuntimeException {
 
     private Integer code;

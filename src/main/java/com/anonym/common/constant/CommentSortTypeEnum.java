@@ -2,9 +2,6 @@ package com.anonym.common.constant;
 
 import com.anonym.common.domain.BaseEnum;
 
-/**
- * 全局排序枚举类
- */
 public enum CommentSortTypeEnum implements BaseEnum {
 
     /**

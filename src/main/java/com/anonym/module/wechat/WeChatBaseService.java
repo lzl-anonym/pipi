@@ -84,16 +84,7 @@ public class WeChatBaseService {
         return this.GLOBAL_ACCESS_TOKEN;
     }
 
-    /**
-     * 公用的向微信服务器发送 支付 api POST 请求的方法
-     * 1、将参数签名
-     * 2、发送请求，获取通信结果
-     * 3、失败则返回失败信息 ，成功返回具体业务的 data 数据
-     *
-     * @param url
-     * @param param
-     * @return
-     */
+
     public ResponseDTO<TreeMap<String, String>> sendPaymentRequest(String url, TreeMap<String, Object> param) {
 
         // -------------------------------------------- 签名 -------------------------------

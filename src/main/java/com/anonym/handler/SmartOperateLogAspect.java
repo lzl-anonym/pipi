@@ -25,9 +25,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 
-/**
- * [  操作日志记录处理,对所有OperateLog注解的Controller进行操作日志监控 ]
- */
+
 @Slf4j
 //@Aspect
 //@Component
