@@ -71,6 +71,8 @@ public class SwaggerTagConst {
 
         public static final String FACE_FUSE_RECORD = "管理端-融合业务";
 
+        public static final String MESSAGE = "管理端-留言业务";
+
 
     }
 

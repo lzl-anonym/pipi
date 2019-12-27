@@ -26,4 +26,7 @@ public class MessageAppQueryDTO extends PageBaseDTO {
     @ApiModelPropertyEnum(MessageTypeEnum.class)
     private Integer messageType;
 
+    @ApiModelProperty(value = "删除状态", hidden = true)
+    private Boolean deleteFlag;
+
 }

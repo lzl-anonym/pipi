@@ -1,5 +1,6 @@
 package com.anonym.module.message;
 
+import com.anonym.common.constant.ResponseCodeConst;
 import com.anonym.common.domain.PageResultDTO;
 import com.anonym.common.domain.ResponseDTO;
 import com.anonym.module.message.domain.dto.MessageAddAppDTO;
@@ -36,6 +37,7 @@ public class MessageService {
      * @return
      */
     public ResponseDTO<PageResultDTO<MessageAppVO>> queryByPage(MessageAppQueryDTO queryDTO) {
+        queryDTO.setDeleteFlag(false);
         Page page = SmartPageUtil.convert2PageQuery(queryDTO);
         List<MessageEntity> messageEntities = messageDao.queryByPage(page, queryDTO);
         PageResultDTO<MessageAppVO> pageResultDTO = SmartPageUtil.convert2PageResult(page, messageEntities, MessageAppVO.class);
@@ -71,13 +73,18 @@ public class MessageService {
 
 
     /**
-     * @author lizongliang
-     * @description 删除
-     * @date 2019-12-20 18:43:17
+     * 删除留言
+     *
+     * @param messageId
+     * @return
      */
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<String> delete(Long id) {
-        messageDao.deleteById(id);
+    public ResponseDTO<String> delete(Long messageId) {
+        MessageEntity messageEntity = messageDao.selectById(messageId);
+        if (null == messageEntity) {
+            return ResponseDTO.wrap(ResponseCodeConst.NOT_EXISTS);
+        }
+        messageEntity.setDeleteFlag(true);
+        messageDao.updateById(messageEntity);
         return ResponseDTO.succ();
     }
 
@@ -89,6 +96,9 @@ public class MessageService {
      */
     public ResponseDTO<MessageAppVO> detail(Long messageId) {
         MessageEntity entity = messageDao.selectById(messageId);
+        if (null == entity) {
+            return ResponseDTO.wrap(ResponseCodeConst.NOT_EXISTS);
+        }
         MessageAppVO dto = SmartBeanUtil.copy(entity, MessageAppVO.class);
         return ResponseDTO.succData(dto);
     }

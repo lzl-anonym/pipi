@@ -18,6 +18,7 @@
         update_time
         from t_message
         <where>
+            delete_flag = #{queryDTO.deleteFlag}
             <if test="queryDTO.startDate != null and queryDTO.startDate != ''">
                 AND DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= #{queryDTO.startDate}
             </if>
