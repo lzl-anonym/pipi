@@ -10,6 +10,7 @@ import com.anonym.module.fuseuser.FaceFuseResponseCodeConst;
 import com.anonym.module.log.orderoperatelog.constant.OrderOperateLogOperateTypeConst;
 import com.anonym.module.systemconfig.constant.SystemConfigResponseCodeConst;
 import com.anonym.module.user.UserResponseCodeConst;
+import com.anonym.module.zteuser.ZteUserResponseCodeConst;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
@@ -38,6 +39,9 @@ public class ResponseCodeConst {
         ResponseCodeContainer.register(UserResponseCodeConst.class, 14000, 14500);
 
         ResponseCodeContainer.register(FaceFuseResponseCodeConst.class, 15000, 15100);
+
+        // 中兴用户
+        ResponseCodeContainer.register(ZteUserResponseCodeConst.class, 15101, 15200);
 
 
     }

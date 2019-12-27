@@ -127,6 +127,8 @@ public class SwaggerTagConst {
 
         public static final String MESSAGE = "留言业务";
 
+        public static final String ZTE_USER = "中兴用户业务";
+
 
     }
 

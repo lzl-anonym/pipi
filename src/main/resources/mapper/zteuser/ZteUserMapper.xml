@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anonym.module.zteuser.ZteUserDao">
+
+    <resultMap id="ZteUserEntity" type="com.anonym.module.zteuser.domain.ZteUserEntity"></resultMap>
+
+
+    <select id="queryByPage" resultMap="ZteUserEntity">
+        select
+          zte_user_id,
+          name,
+          phone,
+          delete_flag,
+          create_time,
+          update_time
+        from t_zte_user
+        <where>
+            <if test="queryDTO.startDate != null and queryDTO.startDate != ''">
+                AND DATE_FORMAT(create_time, '%Y-%m-%d') &gt;= #{queryDTO.startDate}
+            </if>
+            <if test="queryDTO.endDate != null and queryDTO.endDate != ''">
+                AND DATE_FORMAT(create_time, '%Y-%m-%d') &lt;= #{queryDTO.endDate}
+            </if>
+            <if test="queryDTO.name != null and queryDTO.name != ''">
+                AND INSTR(name,#{queryDTO.name})
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById">
+        delete from t_zte_user where id = #{id}
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from t_zte_user where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>
