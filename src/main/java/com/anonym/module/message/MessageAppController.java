@@ -42,18 +42,6 @@ public class MessageAppController extends AppBaseController {
         return messageService.add(addTO);
     }
 
-/*    @ApiOperation(value = "修改", notes = "@author lizongliang")
-    @PostMapping("/message/update")
-    public ResponseDTO<String> update(@RequestBody @Valid MessageBaseDTO updateDTO) {
-        return messageService.update(updateDTO);
-    }*/
-
-/*
-    @ApiOperation(value = "删除", notes = "@author lizongliang")
-    @GetMapping("/message/delete/{id}")
-    public ResponseDTO<String> delete(@PathVariable("id") Long id) {
-        return messageService.delete(id);
-    }*/
 
     @AppAuthorityLevel
     @ApiOperation("留言详情 @author lizongliang")

@@ -5,7 +5,6 @@ import com.anonym.common.domain.PageResultDTO;
 import com.anonym.common.domain.ResponseDTO;
 import com.anonym.module.message.domain.dto.MessageAddAppDTO;
 import com.anonym.module.message.domain.dto.MessageAppQueryDTO;
-import com.anonym.module.message.domain.dto.MessageBaseDTO;
 import com.anonym.module.message.domain.entity.MessageEntity;
 import com.anonym.module.message.domain.vo.MessageAppVO;
 import com.anonym.utils.SmartBeanUtil;
@@ -13,7 +12,6 @@ import com.anonym.utils.SmartPageUtil;
 import com.baomidou.mybatisplus.plugins.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class MessageService {
 
 
     /**
-     * f分页查询留言（app端）
+     * 分页查询留言（app端+后管）
      *
      * @param queryDTO
      * @return
@@ -58,22 +56,8 @@ public class MessageService {
         return ResponseDTO.succ();
     }
 
-
     /**
-     * @author lizongliang
-     * @description 编辑
-     * @date 2019-12-20 18:43:17
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<String> update(MessageBaseDTO updateDTO) {
-        MessageEntity entity = SmartBeanUtil.copy(updateDTO, MessageEntity.class);
-        messageDao.updateById(entity);
-        return ResponseDTO.succ();
-    }
-
-
-    /**
-     * 删除留言
+     * 删除留言（后管）
      *
      * @param messageId
      * @return
@@ -89,7 +73,7 @@ public class MessageService {
     }
 
     /**
-     * 留言详情
+     * 留言详情（app端+后管）
      *
      * @param messageId
      * @return
