@@ -20,7 +20,4 @@ public class FaceFuseAddDTO {
     @NotBlank(message = "人物base64串不能为空")
     private String imageBase64;
 
-    @ApiModelProperty(value = "用户id", hidden = true)
-    private Integer faceFuseUserId;
-
 }

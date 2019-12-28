@@ -21,7 +21,7 @@ import javax.validation.Valid;
  */
 @Api(tags = SwaggerTagConst.App.ZTE_USER)
 @RestController
-public class ZteUserController extends AppBaseController {
+public class ZteUserAppController extends AppBaseController {
 
     @Autowired
     private ZteUserService zteUserService;

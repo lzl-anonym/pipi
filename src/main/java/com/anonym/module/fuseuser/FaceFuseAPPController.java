@@ -6,12 +6,13 @@ import com.anonym.common.domain.ResponseDTO;
 import com.anonym.constant.SwaggerTagConst;
 import com.anonym.module.fuseuser.domain.FaceFuseUserAddDTO;
 import com.anonym.module.fuseuser.fuse.domian.FaceFuseAddDTO;
-import com.anonym.module.user.basic.domain.UserLoginVO;
 import com.anonym.utils.SmartRequestTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -34,15 +35,15 @@ public class FaceFuseAPPController extends AppBaseController {
         return faceFuseService.addFaceFuseUser(addDTO);
     }
 
-    @AppAuthorityLevel
-    @ApiOperation("登录(融合业务)")
-    @GetMapping("/faceFuse/user/login/{phone}")
-    public ResponseDTO<UserLoginVO> faceFuseLogin(@PathVariable String phone) {
-        return faceFuseService.faceFuseLogin(phone);
-    }
+//    @AppAuthorityLevel
+//    @ApiOperation("登录(融合业务)")
+//    @GetMapping("/faceFuse/user/login/{phone}")
+//    public ResponseDTO<UserLoginVO> faceFuseLogin(@PathVariable String phone) {
+//        return faceFuseService.faceFuseLogin(phone);
+//    }
 
     @PostMapping("/faceFuse/save")
-    @ApiOperation("保存合成信息 @author lizongliang")
+    @ApiOperation("合成 @author lizongliang")
     public ResponseDTO<String> addFaceFuse(@RequestBody @Valid FaceFuseAddDTO addDTO) {
         Long userId = SmartRequestTokenUtil.getRequestUserId();
         return faceFuseService.addFaceFuse(addDTO, userId);

@@ -2,10 +2,10 @@ package com.anonym.module.zteuser;
 
 import com.anonym.common.domain.ResponseDTO;
 import com.anonym.constant.RedisKeyConst;
+import com.anonym.module.user.basic.domain.UserDTO;
+import com.anonym.module.user.basic.domain.UserLoginVO;
 import com.anonym.module.zteuser.domain.ZteLoginDTO;
-import com.anonym.module.zteuser.domain.ZteUserDTO;
 import com.anonym.module.zteuser.domain.ZteUserEntity;
-import com.anonym.module.zteuser.domain.ZteUserLoginVO;
 import com.anonym.third.SmartRedisService;
 import com.anonym.utils.SmartBeanUtil;
 import io.jsonwebtoken.Claims;
@@ -59,13 +59,21 @@ public class ZteUserService {
         }
 
         // 2.生成token 保存登录信息至 redis
-        ZteUserDTO userDTO = SmartBeanUtil.copy(null == zteUserEntity ? addEntity : zteUserEntity, ZteUserDTO.class);
+        UserDTO userDTO = new UserDTO();
+        if (null == zteUserEntity) {
+            userDTO.setUserId(addEntity.getZteUserId());
+            userDTO.setPhone(addEntity.getPhone());
 
+        } else {
+            userDTO.setUserId(zteUserEntity.getZteUserId());
+            userDTO.setPhone(zteUserEntity.getPhone());
+        }
         String token = this.generateToken(userDTO);
         userDTO.setToken(token);
+        userDTO.setDisabledFlag(false);
 
         // 3.返回前端
-        ZteUserLoginVO userVO = SmartBeanUtil.copy(userDTO, ZteUserLoginVO.class);
+        UserLoginVO userVO = SmartBeanUtil.copy(userDTO, UserLoginVO.class);
 
         // 4.保存至 redis
         this.saveToken(userDTO);
@@ -78,13 +86,13 @@ public class ZteUserService {
      *
      * @param userDTO
      */
-    public void saveToken(ZteUserDTO userDTO) {
-        redisService.set(RedisKeyConst.TOKEN_USER + userDTO.getZteUserId(), userDTO, EXPIRE_SECONDS);
+    public void saveToken(UserDTO userDTO) {
+        redisService.set(RedisKeyConst.TOKEN_USER + userDTO.getUserId(), userDTO, EXPIRE_SECONDS);
     }
 
 
-    private String generateToken(ZteUserDTO userDTO) {
-        Long id = userDTO.getZteUserId();
+    private String generateToken(UserDTO userDTO) {
+        Long id = userDTO.getUserId();
         /**将token设置为jwt格式*/
         String baseToken = UUID.randomUUID().toString();
         LocalDateTime localDateTimeNow = LocalDateTime.now();

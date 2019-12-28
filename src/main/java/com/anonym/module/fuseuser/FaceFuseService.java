@@ -161,6 +161,10 @@ public class FaceFuseService {
         // 2.保存合成后的信息
         String data = (String) responseDTO.getData();
         com.alibaba.fastjson.JSONObject jsonObject = com.alibaba.fastjson.JSONObject.parseObject(data);
+        // 合成失败  返回百度接口提示信息
+        if (!Objects.equals(jsonObject.getString("error_code"), "0")) {
+            return ResponseDTO.wrapMsg(FaceFuseResponseCodeConst.FUSE_ERROR, jsonObject.getString("error_msg"));
+        }
         String mergeImage = jsonObject.getString("result");
         com.alibaba.fastjson.JSONObject tar = com.alibaba.fastjson.JSONObject.parseObject(mergeImage);
         String str = tar.getString("merge_image");
