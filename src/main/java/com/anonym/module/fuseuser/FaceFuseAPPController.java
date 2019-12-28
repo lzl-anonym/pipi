@@ -28,12 +28,12 @@ public class FaceFuseAPPController extends AppBaseController {
     private FaceFuseService faceFuseService;
 
 
-    @AppAuthorityLevel
-    @ApiOperation("添加用户(融合业务)")
-    @PostMapping("/faceFuse/user/add")
-    public ResponseDTO addFaceFuseUser(@RequestBody @Valid FaceFuseUserAddDTO addDTO) {
-        return faceFuseService.addFaceFuseUser(addDTO);
-    }
+//    @AppAuthorityLevel
+//    @ApiOperation("添加用户(融合业务)")
+//    @PostMapping("/faceFuse/user/add")
+//    public ResponseDTO addFaceFuseUser(@RequestBody @Valid FaceFuseUserAddDTO addDTO) {
+//        return faceFuseService.addFaceFuseUser(addDTO);
+//    }
 
 //    @AppAuthorityLevel
 //    @ApiOperation("登录(融合业务)")
