@@ -2,17 +2,16 @@ package com.anonym.module.fuseuser;
 
 import com.anonym.common.anno.AppAuthorityLevel;
 import com.anonym.common.controller.AppBaseController;
+import com.anonym.common.domain.PageResultDTO;
 import com.anonym.common.domain.ResponseDTO;
 import com.anonym.constant.SwaggerTagConst;
-import com.anonym.module.fuseuser.domain.FaceFuseUserAddDTO;
 import com.anonym.module.fuseuser.fuse.domian.FaceFuseAddDTO;
-import com.anonym.utils.SmartRequestTokenUtil;
+import com.anonym.module.message.domain.dto.MessageAppQueryDTO;
+import com.anonym.module.message.domain.vo.MessageAppVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -42,12 +41,14 @@ public class FaceFuseAPPController extends AppBaseController {
 //        return faceFuseService.faceFuseLogin(phone);
 //    }
 
+    @AppAuthorityLevel
     @PostMapping("/faceFuse/save")
     @ApiOperation("合成 @author lizongliang")
     public ResponseDTO<String> addFaceFuse(@RequestBody @Valid FaceFuseAddDTO addDTO) {
-        Long userId = SmartRequestTokenUtil.getRequestUserId();
-        return faceFuseService.addFaceFuse(addDTO, userId);
+//        Long userId = SmartRequestTokenUtil.getRequestUserId();
+        return faceFuseService.addFaceFuse(addDTO, 666L);
     }
+
 
 
 }

@@ -57,6 +57,11 @@ public class FaceFuseService {
     @Value("${jwt.key}")
     private String jwtKey;
 
+    /**
+     * base64 头
+     */
+    private final static String IMG_HEAD = "data:image/jpg;base64,";
+
 
     /**
      * 过期时间
@@ -180,7 +185,7 @@ public class FaceFuseService {
 
         faceFuseRecordDao.insert(faceFuseRecordEntity);
 
-        return ResponseDTO.succ();
+        return ResponseDTO.succData(IMG_HEAD + str);
     }
 
 
