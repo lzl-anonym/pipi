@@ -159,6 +159,7 @@ public class FaceFuseService {
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO addFaceFuse(FaceFuseAddDTO addDTO, Long userId) {
         // 1.调用百度接口
+
         ResponseDTO responseDTO = this.faceMerge(addDTO);
         if (!responseDTO.isSuccess()) {
             return responseDTO;
@@ -260,17 +261,25 @@ public class FaceFuseService {
 
             String param = GsonUtils.toJson(map);
 
+
             // access_token有过期时间  这里每次都重新请求
+            long startTime1 = System.currentTimeMillis();
             ResponseDTO tokenRes = this.getAccessToken();
             if (!tokenRes.isSuccess()) {
                 // 获取token失败
                 return tokenRes;
             }
-            String accessToken = this.getAccessToken().getData().toString();
+            long endTime1 = System.currentTimeMillis();
+            System.out.println("==============获取百度token时间==============： " + (endTime1 - startTime1) + "ms");
 
+            String accessToken = tokenRes.getData().toString();
+
+            long startTime2 = System.currentTimeMillis();
             String result = HttpUtil.post(MERGE_FACE_API, accessToken, "application/json", param);
+            long endTime2 = System.currentTimeMillis();
+            System.out.println("===================百度融合接口时间=============： " + (endTime2 - startTime2) + "ms");
 
-            System.out.println(result);
+//            System.out.println(result);
             return ResponseDTO.succData(result);
         } catch (Exception e) {
             e.printStackTrace();
