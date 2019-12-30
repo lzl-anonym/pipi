@@ -178,13 +178,19 @@ public class FaceFuseService {
         entity.setFaceFuseUserId(userId.intValue());
         entity.setMergeImage(str);
 
+        long startTime1 = System.currentTimeMillis();
         faceFuseDao.insert(entity);
+        long endTime1 = System.currentTimeMillis();
+        System.out.println("===============保存合成后数据时间===========： " + (endTime1 - startTime1) + "ms");
 
         // 3.插入参与记录
         FaceFuseRecordEntity faceFuseRecordEntity = new FaceFuseRecordEntity();
         faceFuseRecordEntity.setFaceFuseUserId(userId.intValue());
 
+        long startTime2 = System.currentTimeMillis();
         faceFuseRecordDao.insert(faceFuseRecordEntity);
+        long endTime2 = System.currentTimeMillis();
+        System.out.println("===============保存参与记录时间===========： " + (endTime2 - startTime2) + "ms");
 
         return ResponseDTO.succData(IMG_HEAD + str);
     }
@@ -278,8 +284,6 @@ public class FaceFuseService {
             String result = HttpUtil.post(MERGE_FACE_API, accessToken, "application/json", param);
             long endTime2 = System.currentTimeMillis();
             System.out.println("===================百度融合接口时间=============： " + (endTime2 - startTime2) + "ms");
-
-//            System.out.println(result);
             return ResponseDTO.succData(result);
         } catch (Exception e) {
             e.printStackTrace();
