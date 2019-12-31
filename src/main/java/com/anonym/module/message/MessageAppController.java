@@ -1,6 +1,5 @@
 package com.anonym.module.message;
 
-import com.anonym.common.anno.AppAuthorityLevel;
 import com.anonym.common.controller.AppBaseController;
 import com.anonym.common.domain.PageResultDTO;
 import com.anonym.common.domain.ResponseDTO;
@@ -28,14 +27,12 @@ public class MessageAppController extends AppBaseController {
     @Autowired
     private MessageService messageService;
 
-    @AppAuthorityLevel
     @ApiOperation("分页查询 @author lizongliang")
     @PostMapping("/message/page/query")
     public ResponseDTO<PageResultDTO<MessageAppVO>> queryByPage(@RequestBody MessageAppQueryDTO queryDTO) {
         return messageService.queryByPage(queryDTO);
     }
 
-    @AppAuthorityLevel
     @ApiOperation("添加留言 @author lizongliang")
     @PostMapping("/message/add")
     public ResponseDTO<String> add(@RequestBody @Valid MessageAddAppDTO addTO) {
@@ -43,7 +40,6 @@ public class MessageAppController extends AppBaseController {
     }
 
 
-    @AppAuthorityLevel
     @ApiOperation("留言详情 @author lizongliang")
     @GetMapping("/message/detail/{messageId}")
     public ResponseDTO<MessageAppVO> detail(@PathVariable Long messageId) {
