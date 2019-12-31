@@ -29,18 +29,11 @@ public interface MessageDao extends BaseMapper<MessageEntity> {
     List<MessageEntity> queryByPage(Pagination page, @Param("queryDTO") MessageAppQueryDTO queryDTO);
 
     /**
-     * 根据id删除
-     *
-     * @param id
-     * @return
-     */
-    void deleteById(@Param("id") Long id);
-
-    /**
      * 批量删除
      *
      * @param idList
+     * @param deleteFlag
      * @return
      */
-    void deleteByIds(@Param("idList") List<Long> idList);
+    Integer batchUpdateDelete(@Param("idList") List<Long> idList, @Param("deleteFlag") Boolean deleteFlag);
 }

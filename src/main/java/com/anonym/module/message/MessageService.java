@@ -5,11 +5,13 @@ import com.anonym.common.domain.PageResultDTO;
 import com.anonym.common.domain.ResponseDTO;
 import com.anonym.module.message.domain.dto.MessageAddAppDTO;
 import com.anonym.module.message.domain.dto.MessageAppQueryDTO;
+import com.anonym.module.message.domain.dto.MessageBatchDeleteAdminDTO;
 import com.anonym.module.message.domain.entity.MessageEntity;
 import com.anonym.module.message.domain.vo.MessageAppVO;
 import com.anonym.utils.SmartBeanUtil;
 import com.anonym.utils.SmartPageUtil;
 import com.baomidou.mybatisplus.plugins.Page;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,18 +59,16 @@ public class MessageService {
     }
 
     /**
-     * 删除留言（后管）
+     * 批量删除留言（后管）
      *
-     * @param messageId
+     * @param deleteDTO
      * @return
      */
-    public ResponseDTO<String> delete(Long messageId) {
-        MessageEntity messageEntity = messageDao.selectById(messageId);
-        if (null == messageEntity) {
+    public ResponseDTO<String> batchDelete(MessageBatchDeleteAdminDTO deleteDTO) {
+        if (CollectionUtils.isEmpty(deleteDTO.getMessageIdList())) {
             return ResponseDTO.wrap(ResponseCodeConst.NOT_EXISTS);
         }
-        messageEntity.setDeleteFlag(true);
-        messageDao.updateById(messageEntity);
+        messageDao.batchUpdateDelete(deleteDTO.getMessageIdList(), true);
         return ResponseDTO.succ();
     }
 

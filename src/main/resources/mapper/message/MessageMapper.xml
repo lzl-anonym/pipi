@@ -35,15 +35,11 @@
         order by create_time desc
     </select>
 
-    <delete id="deleteById">
-        delete from t_message where id = #{id}
-    </delete>
-
-    <delete id="deleteByIds">
-        delete from t_message where id in
+    <update id="batchUpdateDelete">
+        update t_message set delete_flag = #{deleteFlag} where message_id in
         <foreach collection="idList" open="(" close=")" separator="," item="item">
             #{item}
         </foreach>
-    </delete>
+    </update>
 
 </mapper>

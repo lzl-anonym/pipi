@@ -6,11 +6,14 @@ import com.anonym.common.domain.PageResultDTO;
 import com.anonym.common.domain.ResponseDTO;
 import com.anonym.constant.SwaggerTagConst;
 import com.anonym.module.message.domain.dto.MessageAppQueryDTO;
+import com.anonym.module.message.domain.dto.MessageBatchDeleteAdminDTO;
 import com.anonym.module.message.domain.vo.MessageAppVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * 留言业务层控制层
@@ -41,9 +44,9 @@ public class MessageAdminController extends AdminBaseController {
     }
 
     @AdminAuthorityLevel
-    @ApiOperation("删除留言 @author lizongliang")
-    @GetMapping("/message/delete/{id}")
-    public ResponseDTO<String> delete(@PathVariable("id") Long messageId) {
-        return messageService.delete(messageId);
+    @ApiOperation("批量删除留言 @author lizongliang")
+    @PostMapping("/message/batchDelete")
+    public ResponseDTO<String> batchDelete(@Valid @RequestBody MessageBatchDeleteAdminDTO deleteDTO) {
+        return messageService.batchDelete(deleteDTO);
     }
 }
