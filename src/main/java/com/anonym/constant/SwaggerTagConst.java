@@ -69,9 +69,12 @@ public class SwaggerTagConst {
 
         public static final String RED_ENVELOP = "管理端-红包业务";
 
-        public static final String FACE_FUSE_RECORD = "管理端-融合业务";
+        public static final String FACE_FUSE_RECORD = "管理端-融合活动参与记录业务";
 
         public static final String MESSAGE = "管理端-留言业务";
+
+        public static final String FACE_FUSE = "管理端-融合活动业务";
+
 
 
     }
