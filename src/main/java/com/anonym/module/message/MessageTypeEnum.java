@@ -12,14 +12,14 @@ import com.anonym.common.domain.BaseEnum;
 public enum MessageTypeEnum implements BaseEnum {
 
     /**
-     * 1 我要留言
+     * 1 兴光舞台
      */
-    MESSAGE(1, "我要留言"),
+    MESSAGE(1, "兴光舞台"),
 
     /**
-     * 2 备用
+     * 2 兴声留言机
      */
-    STANDBY(2, "备用");
+    STANDBY(2, "兴声留言机");
 
     private Integer value;
 
