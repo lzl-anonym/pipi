@@ -28,6 +28,10 @@
             <if test="queryDTO.content != null and queryDTO.content != ''">
                 AND INSTR(content,#{queryDTO.content})
             </if>
+            <if test="queryDTO.keyword != null and queryDTO.keyword != ''">
+                AND (INSTR(user_id,#{queryDTO.keyword}) or
+                INSTR(user_name,#{queryDTO.keyword}))
+            </if>
             <if test="queryDTO.messageType != null ">
                 AND message_type = #{queryDTO.messageType}
             </if>

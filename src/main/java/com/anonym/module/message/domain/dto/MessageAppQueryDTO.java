@@ -14,19 +14,22 @@ import lombok.Data;
 public class MessageAppQueryDTO extends PageBaseDTO {
 
 
-    @ApiModelProperty("开始日期")
-    private String startDate;
+	@ApiModelProperty("开始日期")
+	private String startDate;
 
-    @ApiModelProperty("结束日期")
-    private String endDate;
+	@ApiModelProperty("结束日期")
+	private String endDate;
 
-    @ApiModelProperty("留言内容")
-    private String content;
+	@ApiModelProperty("员工ID或者名字")
+	private String keyword;
 
-    @ApiModelPropertyEnum(MessageTypeEnum.class)
-    private Integer messageType;
+	@ApiModelProperty("留言内容")
+	private String content;
 
-    @ApiModelProperty(value = "删除状态", hidden = true)
-    private Boolean deleteFlag;
+	@ApiModelPropertyEnum(MessageTypeEnum.class)
+	private Integer messageType;
+
+	@ApiModelProperty(value = "删除状态", hidden = true)
+	private Boolean deleteFlag;
 
 }
