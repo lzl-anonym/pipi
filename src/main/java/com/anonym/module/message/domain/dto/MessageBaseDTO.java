@@ -5,6 +5,7 @@ import com.anonym.common.validator.en.CheckEnum;
 import com.anonym.module.message.MessageTypeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @author lizongliang
@@ -18,6 +19,7 @@ public class MessageBaseDTO {
     private Integer messageType;
 
     @ApiModelProperty("留言内容")
+    @Length(max = 500, message = "留言最多500个字符")
     private String content;
 
     @ApiModelProperty("图片（备用）")
