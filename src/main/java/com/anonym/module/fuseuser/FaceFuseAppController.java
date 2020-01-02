@@ -20,11 +20,10 @@ import javax.validation.Valid;
  */
 @Api(tags = SwaggerTagConst.App.FACE_FUSE)
 @RestController
-public class FaceFuseAPPController extends AppBaseController {
+public class FaceFuseAppController extends AppBaseController {
 
     @Autowired
     private FaceFuseService faceFuseService;
-
 
     @PostMapping("/faceFuse/save")
     @ApiOperation("合成 @author lizongliang")
