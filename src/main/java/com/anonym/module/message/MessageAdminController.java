@@ -28,7 +28,6 @@ public class MessageAdminController extends AdminBaseController {
     @Autowired
     private MessageService messageService;
 
-    @AdminAuthorityLevel
     @ApiOperation("分页查询 @author lizongliang")
     @PostMapping("/message/page/query")
     public ResponseDTO<PageResultDTO<MessageAppVO>> queryByPage(@RequestBody MessageAppQueryDTO queryDTO) {
@@ -36,14 +35,12 @@ public class MessageAdminController extends AdminBaseController {
     }
 
 
-    @AdminAuthorityLevel
     @ApiOperation("留言详情 @author lizongliang")
     @GetMapping("/message/detail/{messageId}")
     public ResponseDTO<MessageAppVO> detail(@PathVariable Long messageId) {
         return messageService.detail(messageId);
     }
 
-    @AdminAuthorityLevel
     @ApiOperation("批量删除留言 @author lizongliang")
     @PostMapping("/message/batchDelete")
     public ResponseDTO<String> batchDelete(@Valid @RequestBody MessageBatchDeleteAdminDTO deleteDTO) {
