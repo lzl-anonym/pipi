@@ -6,9 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.7.RELEASE</version>
-        <relativePath></relativePath>
-
-        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+        <relativePath/>
     </parent>
     <groupId>com.anonym</groupId>
     <artifactId>anonym</artifactId>
@@ -41,8 +39,8 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-web</artifactId>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-web</artifactId>-->
         <!--</dependency>-->
 
         <dependency>
@@ -58,8 +56,8 @@
 
         <!--数据库驱动-->
         <!--<dependency>-->
-            <!--<groupId>mysql</groupId>-->
-            <!--<artifactId>mysql-connector-java</artifactId>-->
+        <!--<groupId>mysql</groupId>-->
+        <!--<artifactId>mysql-connector-java</artifactId>-->
         <!--</dependency>-->
         <!--mybatisplus与springboot整合-->
         <dependency>
@@ -242,9 +240,9 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!--<dependency>&lt;!&ndash;添加Mybatis依赖 &ndash;&gt;-->
-            <!--<groupId>org.mybatis.spring.boot</groupId>-->
-            <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
-            <!--<version>1.3.1</version>-->
+        <!--<groupId>org.mybatis.spring.boot</groupId>-->
+        <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
+        <!--<version>1.3.1</version>-->
         <!--</dependency>-->
 
         <dependency><!--添加MySql依赖 -->
