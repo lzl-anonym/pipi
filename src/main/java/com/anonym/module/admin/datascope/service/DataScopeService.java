@@ -24,11 +24,7 @@ public class DataScopeService {
     @Autowired
     private DataScopeRoleDao dataScopeRoleDao;
 
-    /**
-     * 获取所有可以进行数据范围配置的信息
-     *
-     * @return
-     */
+
     public ResponseDTO<List<DataScopeAndViewTypeVO>> dataScopeList() {
         List<DataScopeDTO> dataScopeList = this.getDataScopeType();
         List<DataScopeAndViewTypeVO> dataScopeAndTypeList = SmartBeanUtil.copyList(dataScopeList, DataScopeAndViewTypeVO.class);
@@ -39,11 +35,7 @@ public class DataScopeService {
         return ResponseDTO.succData(dataScopeAndTypeList);
     }
 
-    /**
-     * 获取当前系统存在的数据可见范围
-     *
-     * @return
-     */
+
     public List<DataScopeViewTypeVO> getViewType() {
         List<DataScopeViewTypeVO> viewTypeList = Lists.newArrayList();
         DataScopeViewTypeEnum[] enums = DataScopeViewTypeEnum.class.getEnumConstants();

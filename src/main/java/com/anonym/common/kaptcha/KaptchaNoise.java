@@ -7,9 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-/**
- * [ 验证码加噪处理 ]
- */
+
 public class KaptchaNoise extends Configurable implements NoiseProducer {
 
     public KaptchaNoise() {

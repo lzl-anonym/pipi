@@ -23,9 +23,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-/**
- * [ 登录拦截器 ]
- */
+
 @Component
 public class AdminAuthorityInterceptor extends HandlerInterceptorAdapter {
 
@@ -40,15 +38,7 @@ public class AdminAuthorityInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private PrivilegeEmployeeService privilegeEmployeeService;
 
-    /**
-     * 拦截服务器端响应处理ajax请求返回结果
-     *
-     * @param request
-     * @param response
-     * @param handler
-     * @return
-     * @throws Exception
-     */
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //跨域设置
@@ -59,20 +49,17 @@ public class AdminAuthorityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        //不需要登录的注解
         AdminAuthorityLevel adminAuthorityLevel = ((HandlerMethod) handler).getMethodAnnotation(AdminAuthorityLevel.class);
         if (null != adminAuthorityLevel && adminAuthorityLevel.level() == AdminAuthorityLevel.LOW) {
             return true;
         }
 
-        //放行的Uri前缀
         String uri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String target = uri.replaceFirst(contextPath, "");
         if (CommonConst.CommonCollection.contain(CommonConst.CommonCollection.IGNORE_URL, target)) {
             return true;
         }
-        //需要做token校验, 消息头的token优先于请求query参数的token
         String xHeaderToken = request.getHeader(TOKEN_NAME);
         String xRequestToken = request.getParameter(TOKEN_NAME);
         String xAccessToken = null != xHeaderToken ? xHeaderToken : xRequestToken;
@@ -82,13 +69,11 @@ public class AdminAuthorityInterceptor extends HandlerInterceptorAdapter {
         }
 
 
-        //根据token获取登录用户
         LoginTokenDTO requestToken = loginTokenService.getEmployeeTokenInfo(xAccessToken);
         if (null == requestToken) {
             this.outputResult(response, EmployeeResponseCodeConst.LOGIN_ERROR);
             return false;
         }
-        //判断接口权限
         String methodName = ((HandlerMethod) handler).getMethod().getName();
         String className = ((HandlerMethod) handler).getBeanType().getName();
         List<String> list = SmartStringUtil.splitConvertToList(className, "\\.");
@@ -103,12 +88,10 @@ public class AdminAuthorityInterceptor extends HandlerInterceptorAdapter {
         } else if (isMethodAnnotation) {
             noValidPrivilege = m.getAnnotation(AdminNoValidPrivilege.class);
         }
-        //不需验证权限
         if (noValidPrivilege != null) {
             SmartRequestTokenUtil.setUser(request, requestToken);
             return true;
         }
-        //需要验证权限
         Boolean privilegeValidPass = privilegeEmployeeService.checkEmployeeHavePrivilege(requestToken.getId(), controllerName, methodName);
         if (!privilegeValidPass) {
             this.outputResult(response, EmployeeResponseCodeConst.NOT_HAVE_PRIVILEGES);

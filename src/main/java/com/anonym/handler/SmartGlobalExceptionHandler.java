@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * [ 全局异常拦截 ]
- */
+
 @Slf4j
 @ControllerAdvice
 public class SmartGlobalExceptionHandler {

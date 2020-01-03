@@ -51,11 +51,4 @@ public class EmployeeLoginController {
         return loginService.logoutByToken(requestToken);
     }
 
-    @GetMapping("/admin/verificationCode")
-    @ApiOperation(value = "获取验证码", notes = "获取验证码")
-    @AdminAuthorityLevel
-    public ResponseDTO<KaptchaVO> verificationCode() {
-        return loginService.verificationCode();
-    }
-
 }

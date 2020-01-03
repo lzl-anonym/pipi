@@ -8,11 +8,9 @@ import com.anonym.module.admin.employee.basic.domain.vo.EmployeeVO;
 import com.anonym.module.log.loginlog.domain.EmployeeLoginLogDTO;
 import com.anonym.module.log.loginlog.domain.EmployeeLoginLogEntity;
 import com.anonym.module.log.loginlog.domain.EmployeeLoginLogQueryDTO;
-import com.anonym.module.websocket.WebSocketAdminServer;
 import com.anonym.utils.SmartBeanUtil;
 import com.anonym.utils.SmartPageUtil;
 import com.baomidou.mybatisplus.plugins.Page;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,13 +59,8 @@ public class EmployeeLoginLogService {
      * @return
      */
     public ResponseDTO<PageResultDTO<EmployeeVO>> queryUserOnLine(EmployeeQueryDTO queryDTO) {
-        List<Long> onLineUserList = WebSocketAdminServer.getOnLineUserList();
-        if (CollectionUtils.isEmpty(onLineUserList)) {
-            return ResponseDTO.succ();
-        }
-        queryDTO.setEmployeeIds(onLineUserList);
-        ResponseDTO<PageResultDTO<EmployeeVO>> employeeList = employeeService.selectEmployeeList(queryDTO);
-        return employeeList;
+
+        return null;
     }
 
 }

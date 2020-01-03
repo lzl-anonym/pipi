@@ -5,9 +5,7 @@ import com.anonym.common.domain.BaseEnum;
 import java.util.Arrays;
 import java.util.Optional;
 
-/**
- * [ 是与否]
- */
+
 public enum JudgeEnum implements BaseEnum {
 
     NO(0, "否"),

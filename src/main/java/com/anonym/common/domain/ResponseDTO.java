@@ -2,9 +2,7 @@ package com.anonym.common.domain;
 
 import com.anonym.common.constant.ResponseCodeConst;
 
-/**
- * 返回类
- */
+
 public class ResponseDTO<T> {
 
     protected Integer code;

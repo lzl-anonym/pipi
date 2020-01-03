@@ -6,9 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
-/**
- * 分页基础参数
- */
+
 @Data
 public class PageBaseDTO {
 

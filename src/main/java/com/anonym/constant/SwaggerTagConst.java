@@ -35,40 +35,6 @@ public class SwaggerTagConst {
 
         public static final String MANAGER_USER = "管理端-小程序用户管理";
 
-        public static final String MANAGER_PIC = "管理端-图片管理";
-
-        public static final String GOODS = "管理端-商品管理";
-
-        public static final String SHOP = "管理端-商家管理";
-
-        public static final String SHOP_STATEMENT = "管理端-商家结算管理";
-
-        public static final String FEEDBACK = "管理端-用户反馈";
-
-        public static final String MANAGER_ARTICLE = "管理端-旅拍管理";
-
-        public static final String COMMENT = "管理端-评论管理";
-
-        public static final String GOODS_ASSESS = "管理端-商品评价";
-
-        public static final String ORDER = "管理端-订单业务";
-
-        public static final String SURROUNDING = "管理端-周边管理";
-
-        public static final String MANAGER_ACTIVITY = "管理端-活动管理";
-
-        public static final String ROUTE = "管理端-路线管理";
-
-        public static final String COUPON = "管理端-优惠券";
-
-        public static final String GUIDELINE = "管理端-攻略业务";
-
-        public static final String SEARCH_RECORD_MANAGEMENT = "管理端-热搜";
-
-        public static final String SENSITIVE_WORD = "管理端-敏感词业务";
-
-        public static final String RED_ENVELOP = "管理端-红包业务";
-
         public static final String FACE_FUSE_RECORD = "管理端-融合活动参与记录业务";
 
         public static final String MESSAGE = "管理端-留言业务";
@@ -79,9 +45,7 @@ public class SwaggerTagConst {
 
     }
 
-    /**
-     * APP
-     */
+
     public static class App {
 
         public static final String LOGIN = "用户登录";
@@ -89,42 +53,6 @@ public class SwaggerTagConst {
         public static final String PIC = "图片业务";
 
         public static final String USER_ACCOUNT = "用户账号";
-
-        public static final String USER_SITE_MSG = "用户站内信";
-
-        public static final String GOODS = "商品业务";
-
-        public static final String ORDER = "订单业务";
-
-        public static final String SEARCH_RECORD = "搜索记录业务";
-
-        public static final String ARTICLE = "旅拍";
-
-        public static final String FEEDBACK = "用户反馈";
-
-        public static final String GOODS_ASSESS = "商品评价";
-
-        public static final String SHOP = "商家";
-
-        public static final String SURROUNDING = "周边";
-
-        public static final String ACTIVITY = "活动";
-
-        public static final String ROUTE = "路线";
-
-        public static final String REWARD = "回馈金（奖励）";
-
-        public static final String REWARD_RECORD = "回馈金记录";
-
-        public static final String WECHAT = "微信业务";
-
-        public static final String COUPON = "优惠券业务";
-
-        public static final String GUIDELINE = "攻略业务";
-
-        public static final String SENSITIVE_WORD_DETECTION = "敏感词业务";
-
-        public static final String RED_ENVELOP = "红包";
 
         public static final String FACE_FUSE = "融合服务";
 
@@ -137,14 +65,9 @@ public class SwaggerTagConst {
 
     }
 
-    /**
-     * 通用
-     */
     public static class Common {
 
         public static final String FILE_SERVICE = "通用-文件服务";
-
-        public static final String SMS_SERVICE = "通用-短信服务";
     }
 
 }

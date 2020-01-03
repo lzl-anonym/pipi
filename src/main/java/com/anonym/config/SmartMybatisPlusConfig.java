@@ -14,17 +14,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan(basePackages = {"com.anonym.module.*"})
 public class SmartMybatisPlusConfig {
 
-    /**
-     * 分页插件
-     */
+
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
     }
 
-    /**
-     * mybatis-plus SQL执行效率插件【生产环境可以关闭】
-     */
     @Bean
     @Conditional(SystemEnvironmentCondition.class)
     public PerformanceInterceptor performanceInterceptor() {

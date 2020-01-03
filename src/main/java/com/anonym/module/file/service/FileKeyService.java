@@ -18,9 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * 云服务商 的oss文件工具类
- */
 @Slf4j
 @Service
 public class FileKeyService {

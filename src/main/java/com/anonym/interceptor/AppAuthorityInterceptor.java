@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * app 登录拦截器
- */
+
 @Component
 public class AppAuthorityInterceptor extends HandlerInterceptorAdapter {
 
@@ -33,15 +31,7 @@ public class AppAuthorityInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private UserLoginService userLoginService;
 
-    /**
-     * 拦截服务器端响应处理ajax请求返回结果
-     *
-     * @param request
-     * @param response
-     * @param handler
-     * @return
-     * @throws Exception
-     */
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //跨域设置
@@ -51,7 +41,6 @@ public class AppAuthorityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        //放行的Uri前缀
         String uri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String target = uri.replaceFirst(contextPath, "");
@@ -59,24 +48,20 @@ public class AppAuthorityInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        // 检查是否包含 token
         String xHeaderToken = request.getHeader(TOKEN_NAME);
         String xRequestToken = request.getParameter(TOKEN_NAME);
         String xAccessToken = null != xHeaderToken ? xHeaderToken : xRequestToken;
         UserDTO userTokenInfo = null;
         if (null != xAccessToken) {
-            // 包含token 则获取用户信息 并保存
             userTokenInfo = userLoginService.getUserTokenInfo(xAccessToken);
             this.setRequestUser(userTokenInfo, request);
         }
 
-        //不需要登录
         AppAuthorityLevel appAuthorityLevel = ((HandlerMethod) handler).getMethodAnnotation(AppAuthorityLevel.class);
         if (null != appAuthorityLevel && appAuthorityLevel.level() == AppAuthorityLevel.LOW) {
             return true;
         }
 
-        //需要做 token 校验, 消息头的token优先于请求query参数的token
         if (null == xAccessToken || null == userTokenInfo) {
             this.outputResult(response, UserResponseCodeConst.LOGIN_ERROR);
             return false;
@@ -95,11 +80,7 @@ public class AppAuthorityInterceptor extends HandlerInterceptorAdapter {
         SmartRequestTokenUtil.setUser(request, tokenDTO);
     }
 
-    /**
-     * 配置跨域
-     *
-     * @param response
-     */
+
     private void crossDomainConfig(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", accessControlAllowOrigin);
         response.setHeader("Access-Control-Allow-Credentials", "true");

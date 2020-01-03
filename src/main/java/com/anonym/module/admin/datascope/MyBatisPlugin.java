@@ -14,9 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * [ mybaits sql 拦截 ]
- */
+
 @Intercepts({@Signature(type = org.apache.ibatis.executor.Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 @Component
 public class MyBatisPlugin implements Interceptor {
@@ -99,9 +97,7 @@ public class MyBatisPlugin implements Interceptor {
         }
     }
 
-    /**
-     * 复制MappedStatement对象
-     */
+
     private MappedStatement copyFromMappedStatement(MappedStatement ms, SqlSource newSqlSource, ParameterMap parameterMap) {
 
         MappedStatement.Builder builder = new MappedStatement.Builder(ms.getConfiguration(), ms.getId(), newSqlSource, ms.getSqlCommandType());

@@ -36,18 +36,10 @@ public class EmployeeLoginTokenService {
     @Autowired
     private EmployeeLoginCacheService loginCacheService;
 
-    /**
-     * 功能描述: 生成JWT TOKEN
-     *
-     * @param employeeDTO
-     * @return
-     * @auther yandanyang
-     * @date 2018/9/12 0012 上午 10:08
-     */
+
     public String generateToken(EmployeeDTO employeeDTO) {
 
         Long id = employeeDTO.getId();
-        /**将token设置为jwt格式*/
         String baseToken = UUID.randomUUID().toString();
         LocalDateTime localDateTimeNow = LocalDateTime.now();
         LocalDateTime localDateTimeExpire = localDateTimeNow.plusSeconds(EXPIRE_SECONDS);
@@ -60,14 +52,7 @@ public class EmployeeLoginTokenService {
         return compactJws;
     }
 
-    /**
-     * 功能描述: 根据登陆token获取登陆信息
-     *
-     * @param
-     * @return
-     * @auther yandanyang
-     * @date 2018/9/12 0012 上午 10:11
-     */
+
     public LoginTokenDTO getEmployeeTokenInfo(String token) {
         Long employeeId = -1L;
         try {

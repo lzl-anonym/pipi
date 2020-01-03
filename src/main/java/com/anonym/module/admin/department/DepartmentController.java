@@ -43,23 +43,7 @@ public class DepartmentController {
         return departmentService.listAllDepartmentEmployee(departmentName);
     }
 
-    @ApiOperation(value = "添加部门", notes = "添加部门")
-    @PostMapping("/admin/department/add")
-    public ResponseDTO<String> addDepartment(@Valid @RequestBody DepartmentCreateDTO departmentCreateDTO) {
-        return departmentService.addDepartment(departmentCreateDTO);
-    }
 
-    @ApiOperation(value = "更新部门信息", notes = "更新部门信息")
-    @PostMapping("/admin/department/update")
-    public ResponseDTO<String> updateDepartment(@Valid @RequestBody DepartmentUpdateDTO departmentUpdateDTO) {
-        return departmentService.updateDepartment(departmentUpdateDTO);
-    }
-
-    @ApiOperation(value = "删除部门", notes = "删除部门")
-    @PostMapping("/admin/department/delete/{departmentId}")
-    public ResponseDTO<String> delDepartment(@PathVariable("departmentId") Long departmentId) {
-        return departmentService.delDepartment(departmentId);
-    }
 
     @ApiOperation(value = "获取部门信息", notes = "获取部门")
     @GetMapping("/admin/department/query/{departmentId}")
@@ -73,22 +57,7 @@ public class DepartmentController {
         return departmentService.listAll();
     }
 
-    @ApiOperation(value = "上下移动")
-    @GetMapping("/admin/department/upOrDown/{departmentId}/{swapId}")
-    public ResponseDTO<String> upOrDown(@PathVariable("departmentId") Long departmentId, @PathVariable("swapId") Long swapId) {
-        return departmentService.upOrDown(departmentId, swapId);
-    }
 
-    @ApiOperation(value = "升级")
-    @GetMapping("/admin/department/upgrade/{departmentId}")
-    public ResponseDTO<String> upgrade(@PathVariable("departmentId") Long departmentId) {
-        return departmentService.upgrade(departmentId);
-    }
 
-    @ApiOperation(value = "降级")
-    @GetMapping("/admin/department/downgrade/{departmentId}/{preId}")
-    public ResponseDTO<String> downgrade(@PathVariable("departmentId") Long departmentId, @PathVariable("preId") Long preId) {
-        return departmentService.downgrade(departmentId, preId);
-    }
 
 }

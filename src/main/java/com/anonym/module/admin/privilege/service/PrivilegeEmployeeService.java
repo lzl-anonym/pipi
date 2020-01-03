@@ -23,15 +23,11 @@ import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
-/**
- * [ 后台员工权限缓存方法 ]
- */
+
 @Service
 public class PrivilegeEmployeeService {
 
-    /**
-     * 后台用户权限缓存 <id,<controllerName,methodName></>></>
-     */
+
     private ConcurrentMap<Long, Map<String, List<String>>> employeePrivileges = new ConcurrentLinkedHashMap.Builder<Long, Map<String, List<String>>>().maximumWeightedCapacity(1000).build();
 
     @Autowired
@@ -46,11 +42,7 @@ public class PrivilegeEmployeeService {
     @Autowired
     private PrivilegeDao privilegeDao;
 
-    /**
-     * 移除某人缓存中的权限
-     *
-     * @param employeeId
-     */
+
     public void removeCache(Long employeeId) {
         this.employeePrivileges.remove(employeeId);
     }

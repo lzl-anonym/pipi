@@ -34,9 +34,7 @@ public class DataScopeSqlConfigService {
     @Value("${swagger.packAge}")
     private String scanPackage;
 
-    /**
-     * 注解joinsql 参数
-     */
+
     private static final String EMPLOYEE_PARAM = "#employeeIds";
 
     private static final String DEPARTMENT_PARAM = "#departmentIds";

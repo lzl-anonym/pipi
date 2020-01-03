@@ -36,10 +36,7 @@ import java.lang.reflect.AnnotatedElement;
 
 import static springfox.documentation.schema.Annotations.findPropertyAnnotation;
 
-/**
- * swagger 用于说明枚举类字段说明
- * SWAGGER_PLUGIN_ORDER+1 是将此配置放在原来的后面执行
- */
+
 @Component
 @Order(SwaggerPluginSupport.SWAGGER_PLUGIN_ORDER + 1)
 public class SmartSwaggerApiModelEnumPlugin implements ModelPropertyBuilderPlugin {

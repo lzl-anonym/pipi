@@ -6,9 +6,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
-/**
- * [ 验证码颜色 ]
- */
+
 public class KaptchaColor {
 
     public static Color getColor() {

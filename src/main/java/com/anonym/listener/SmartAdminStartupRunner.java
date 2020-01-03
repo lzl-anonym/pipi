@@ -16,14 +16,8 @@ public class SmartAdminStartupRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        log.info("###################### Init start ######################");
-
-        // 初始化状态码
         ResponseCodeConst.init();
 
-        // 初始化微信全局AccessToken
-        //weChatBaseService.initGlobalAccessToken();
-
-        log.info("###################### Init complete ######################");
+        log.info("###################### 系统已成功启动 ######################");
     }
 }

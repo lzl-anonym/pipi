@@ -2,7 +2,6 @@ package com.anonym.common.constant;
 
 import com.anonym.module.admin.department.DepartmentResponseCodeConst;
 import com.anonym.module.admin.employee.EmployeeResponseCodeConst;
-import com.anonym.module.admin.position.PositionResponseCodeConst;
 import com.anonym.module.admin.privilege.constant.PrivilegeResponseCodeConst;
 import com.anonym.module.admin.role.basic.RoleResponseCodeConst;
 import com.anonym.module.file.constant.FileResponseCodeConst;
@@ -17,15 +16,13 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 每个业务，100个范围值就够了.
- */
+
 @Slf4j
 public class ResponseCodeConst {
 
-    // 范围声明
+
     static {
-        // 系统功能，从0开始，step=1000
+
         ResponseCodeContainer.register(ResponseCodeConst.class, 0, 1000);
         ResponseCodeContainer.register(DepartmentResponseCodeConst.class, 2001, 2999);
         ResponseCodeContainer.register(EmployeeResponseCodeConst.class, 3001, 3999);
@@ -34,8 +31,7 @@ public class ResponseCodeConst {
         ResponseCodeContainer.register(RoleResponseCodeConst.class, 6001, 6999);
         ResponseCodeContainer.register(PrivilegeResponseCodeConst.class, 7001, 7999);
         ResponseCodeContainer.register(OrderOperateLogOperateTypeConst.class, 8001, 8999);
-        ResponseCodeContainer.register(PositionResponseCodeConst.class, 13000, 13999);
-        // 用户
+
         ResponseCodeContainer.register(UserResponseCodeConst.class, 14000, 14500);
 
         ResponseCodeContainer.register(FaceFuseResponseCodeConst.class, 15000, 15100);
@@ -125,16 +121,10 @@ public class ResponseCodeConst {
     }
 
     public static void init() {
-        log.info("ResponseCodeConst init....");
     }
 
-    // =======================分割=======================
 
-    /**
-     * 内部类，用于检测code范围
-     *
-     * @author Anders
-     */
+
     @Slf4j
     private static class ResponseCodeContainer {
 
@@ -142,13 +132,6 @@ public class ResponseCodeConst {
 
         private static final Map<Class<? extends ResponseCodeConst>, int[]> RESPONSE_CODE_RANGE_MAP = new HashMap<>();
 
-        /**
-         * id的范围：[start, end]左闭右闭
-         *
-         * @param clazz
-         * @param start
-         * @param end
-         */
         private static void register(Class<? extends ResponseCodeConst> clazz, int start, int end) {
             if (start > end) {
                 throw new IllegalArgumentException("<ResponseDTO> start > end!");
@@ -166,7 +149,7 @@ public class ResponseCodeConst {
 
             RESPONSE_CODE_RANGE_MAP.put(clazz, new int[]{start, end});
 
-            // 提前初始化static变量，进行范围检测
+
             Field[] fields = clazz.getFields();
             if (fields.length != 0) {
                 try {

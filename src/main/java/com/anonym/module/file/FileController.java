@@ -23,9 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/**
- * @Description: 文件服务
- */
+
 @RestController
 @Api(tags = {SwaggerTagConst.Common.FILE_SERVICE})
 public class FileController extends CommonBaseController {

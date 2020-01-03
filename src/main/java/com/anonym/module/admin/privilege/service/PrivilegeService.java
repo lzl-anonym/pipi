@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * [ 后台员工权限 ]
- */
+
 @Service
 public class PrivilegeService {
 
@@ -29,11 +27,7 @@ public class PrivilegeService {
     @Autowired
     private RolePrivilegeDao rolePrivilegeDao;
 
-    /**
-     * 获取系统所有请求路径
-     *
-     * @return
-     */
+
     public ResponseDTO<List<PrivilegeRequestUrlVO>> getPrivilegeUrlDTOList() {
         List<PrivilegeRequestUrlVO> privilegeUrlList = privilegeRequestUrlService.getPrivilegeList();
         return ResponseDTO.succData(privilegeUrlList);
@@ -181,12 +175,7 @@ public class PrivilegeService {
         return menuList;
     }
 
-    /**
-     * 保存更新功能点
-     *
-     * @param privilegeFunctionDTO
-     * @return
-     */
+
     public ResponseDTO<String> functionSaveOrUpdate(PrivilegeFunctionDTO privilegeFunctionDTO) {
         String functionKey = privilegeFunctionDTO.getFunctionKey();
         PrivilegeEntity functionEntity = privilegeDao.selectByKey(functionKey);

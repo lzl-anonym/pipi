@@ -26,9 +26,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
-/**
- * [ 初始化 分离前后台权限URL ]
- */
+
 @Slf4j
 @Service
 public class PrivilegeRequestUrlService {
@@ -46,10 +44,8 @@ public class PrivilegeRequestUrlService {
         this.privilegeUrlDTOList.clear();
 
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
-        //获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
         map.forEach((info, handlerMethod) -> {
-            //只对Rest 服务进行权限验证
             RestController restAnnotation = AnnotationUtils.findAnnotation(handlerMethod.getMethod().getDeclaringClass(), RestController.class);
             if (restAnnotation == null) {
                 ResponseBody responseBody = handlerMethod.getMethod().getAnnotation(ResponseBody.class);
@@ -57,9 +53,7 @@ public class PrivilegeRequestUrlService {
                     return;
                 }
             }
-            //获取url的Set集合，一个方法可能对应多个url
             Set<String> patterns = info.getPatternsCondition().getPatterns();
-            // 只获取后端api
             patterns = patterns.stream().filter(e -> e.contains(CommonConst.API_PREFIX_ADMIN)).collect(Collectors.toSet());
 
             if (CollectionUtils.isEmpty(patterns)) {
@@ -92,7 +86,6 @@ public class PrivilegeRequestUrlService {
                 this.privilegeUrlDTOList.add(privilegeUrlDTO);
             }
         });
-        log.info("------------------------------- 后管权限API缓存初始完毕 -------------------------------");
     }
 
     private Set<String> getUrlSet(Set<String> patterns) {

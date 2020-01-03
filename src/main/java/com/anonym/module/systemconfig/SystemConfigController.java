@@ -34,17 +34,8 @@ public class SystemConfigController {
         return systemConfigService.getSystemConfigPage(queryDTO);
     }
 
-    @ApiOperation(value = "添加配置参数", notes = "添加配置参数")
-    @PostMapping("/admin/systemConfig/add")
-    public ResponseDTO<String> addSystemConfig(@RequestBody @Valid SystemConfigAddDTO configAddDTO) {
-        return systemConfigService.addSystemConfig(configAddDTO);
-    }
 
-    @ApiOperation(value = "修改配置参数", notes = "修改配置参数")
-    @PostMapping("/admin/systemConfig/update")
-    public ResponseDTO<String> updateSystemConfig(@RequestBody @Valid SystemConfigUpdateDTO updateDTO) {
-        return systemConfigService.updateSystemConfig(updateDTO);
-    }
+
 
     @ApiOperation(value = "根据分组查询所有系统配置", notes = "根据分组查询所有系统配置")
     @GetMapping("/admin/systemConfig/getListByGroup")

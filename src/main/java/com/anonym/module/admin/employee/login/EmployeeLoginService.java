@@ -50,8 +50,6 @@ public class EmployeeLoginService {
     @Autowired
     private EmployeeLoginCacheService loginCacheService;
 
-    @Autowired
-    private DepartmentDao departmentDao;
 
     @Autowired
     private PrivilegeEmployeeService privilegeEmployeeService;
@@ -59,14 +57,7 @@ public class EmployeeLoginService {
     @Autowired
     private EmployeeLoginTokenService loginTokenService;
 
-    @Autowired
-    private LogService logService;
 
-    @Autowired
-    private DefaultKaptcha defaultKaptcha;
-
-    @Autowired
-    private ValueOperations<String, String> redisValueOperations;
 
 
     /**
@@ -76,15 +67,6 @@ public class EmployeeLoginService {
      * @return 登录用户基本信息
      */
     public ResponseDTO<EmployeeLoginDetailVO> login(@Valid EmployeeLoginFormDTO loginForm, HttpServletRequest request) {
-//        String redisVerificationCode = redisValueOperations.get(loginForm.getCodeUuid());
-//        //增加删除已使用的验证码方式 频繁登录 TODO listen 暂时移除验证码校验
-//        redisValueOperations.getOperations().delete(loginForm.getCodeUuid());
-//        if (StringUtils.isEmpty(redisVerificationCode)) {
-//            return ResponseDTO.wrap(EmployeeResponseCodeConst.VERIFICATION_CODE_INVALID);
-//        }
-//        if (!redisVerificationCode.equalsIgnoreCase(loginForm.getCode())) {
-//            return ResponseDTO.wrap(EmployeeResponseCodeConst.VERIFICATION_CODE_INVALID);
-//        }
         String loginPwd = SmartDigestUtil.encryptPassword(CommonConst.Password.SALT_FORMAT, loginForm.getLoginPwd());
         EmployeeDTO employeeDTO = employeeDao.login(loginForm.getLoginName(), loginPwd);
         if (null == employeeDTO) {
@@ -93,81 +75,31 @@ public class EmployeeLoginService {
         if (EmployeeStatusEnum.DISABLED.equalsValue(employeeDTO.getIsDisabled())) {
             return ResponseDTO.wrap(EmployeeResponseCodeConst.IS_DISABLED);
         }
-        //jwt token赋值
         String compactJws = loginTokenService.generateToken(employeeDTO);
 
 
         EmployeeLoginDetailVO loginDTO = SmartBeanUtil.copy(employeeDTO, EmployeeLoginDetailVO.class);
 
-        //获取前端功能权限
         loginDTO.setPrivilegeList(initEmployeePrivilege(employeeDTO.getId()));
 
         loginDTO.setXAccessToken(compactJws);
-//        DepartmentEntity departmentEntity = departmentDao.selectById(employeeDTO.getDepartmentId());
-//        loginDTO.setDepartmentName(departmentEntity.getName());
 
-        //判断是否为超管
         Boolean isSuperman = privilegeEmployeeService.isSuperman(loginDTO.getId());
         loginDTO.setIsSuperMan(isSuperman);
 
-
-        //登陆操作日志
-//        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-//        EmployeeLoginLogEntity logEntity =
-//            EmployeeLoginLogEntity.builder().userId(employeeDTO.getId()).userName(employeeDTO.getActualName()).remoteIp(SmartIPUtil.getRemoteIp(request)).remotePort(request.getRemotePort()).remoteAddress(SmartIPUtil.getRemoteLocation(request)).remoteBrowser(userAgent.getBrowser().getName()).remoteOs(userAgent.getOperatingSystem().getName()).loginStatus(JudgeEnum.YES.getValue()).build();
-//        logService.addLog(logEntity);
 
         loginCacheService.addLoginCache(employeeDTO);
 
         return ResponseDTO.succData(loginDTO);
     }
 
-    /**
-     * 手机端退出登陆，清除token缓存
-     *
-     * @param requestToken
-     * @return 退出登陆是否成功，bool
-     */
     public ResponseDTO<Boolean> logoutByToken(LoginTokenDTO requestToken) {
         privilegeEmployeeService.removeCache(requestToken.getId());
         loginCacheService.removeLoginCache(requestToken.getId());
         return ResponseDTO.succ();
     }
 
-    /**
-     * 获取验证码
-     *
-     * @return
-     */
-    public ResponseDTO<KaptchaVO> verificationCode() {
-        KaptchaVO kaptchaDTO = new KaptchaVO();
-        String uuid = UUID.randomUUID().toString();
-        String kaptchaText = SmartRandomUtil.generateRandomNum(4);
 
-        String base64Code = "";
-
-        BufferedImage image = defaultKaptcha.createImage(kaptchaText);
-        ByteArrayOutputStream outputStream = null;
-        try {
-            outputStream = new ByteArrayOutputStream();
-            ImageIO.write(image, "jpg", outputStream);
-            base64Code = Base64.encodeBase64String(outputStream.toByteArray());
-        } catch (Exception e) {
-            log.error("verificationCode exception .{}", e);
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (Exception e) {
-                    log.error("verificationCode outputStream close exception .{}", e);
-                }
-            }
-        }
-        kaptchaDTO.setUuid(uuid);
-        kaptchaDTO.setCode("data:image/png;base64," + base64Code);
-        redisValueOperations.set(uuid, kaptchaText, 60L, TimeUnit.SECONDS);
-        return ResponseDTO.succData(kaptchaDTO);
-    }
 
     /**
      * 初始化员工权限

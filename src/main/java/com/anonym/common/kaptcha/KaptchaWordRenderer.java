@@ -8,9 +8,7 @@ import java.awt.font.GlyphVector;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-/**
- * [ 验证码字体生成 ]
- */
+
 public class KaptchaWordRenderer extends Configurable implements com.google.code.kaptcha.text.WordRenderer {
 
     public KaptchaWordRenderer() {

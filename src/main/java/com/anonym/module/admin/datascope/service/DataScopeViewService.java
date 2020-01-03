@@ -88,12 +88,7 @@ public class DataScopeViewService {
         return allDepartmentIds;
     }
 
-    /**
-     * 根据员工id 获取各数据范围最大的可见范围 map<dataScopeType,viewType></>
-     *
-     * @param employeeId
-     * @return
-     */
+
     private Integer getEmployeeDataScopeViewType(Integer dataScopeType, Long employeeId) {
         if (employeeId == null) {
             return DataScopeViewTypeEnum.ME.getType();

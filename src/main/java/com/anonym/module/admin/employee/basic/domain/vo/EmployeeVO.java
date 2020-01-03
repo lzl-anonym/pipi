@@ -1,15 +1,12 @@
 package com.anonym.module.admin.employee.basic.domain.vo;
 
-import com.anonym.module.admin.position.domain.dto.PositionRelationResultDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
-
  * @Description: 员工信息
  */
 
@@ -63,8 +60,6 @@ public class EmployeeVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
-    @ApiModelProperty("岗位关联信息")
-    private List<PositionRelationResultDTO> positionRelationList;
 
     @ApiModelProperty("岗位名称")
     private String positionName;

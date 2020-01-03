@@ -120,67 +120,10 @@ public class DepartmentService {
         return result;
     }
 
-    /**
-     * 新增添加部门
-     *
-     * @param departmentCreateDTO
-     * @return AjaxResult
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<String> addDepartment(DepartmentCreateDTO departmentCreateDTO) {
-        DepartmentEntity departmentEntity = SmartBeanUtil.copy(departmentCreateDTO, DepartmentEntity.class);
-        departmentEntity.setSort(0L);
-        departmentDao.insert(departmentEntity);
-        departmentEntity.setSort(departmentEntity.getId());
-        departmentDao.updateById(departmentEntity);
-        return ResponseDTO.succ();
-    }
 
-    /**
-     * 更新部门信息
-     *
-     * @param updateDTO
-     * @return AjaxResult<String>
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<String> updateDepartment(DepartmentUpdateDTO updateDTO) {
-        if (updateDTO.getParentId() == null) {
-            return ResponseDTO.wrap(DepartmentResponseCodeConst.PARENT_ID_ERROR);
-        }
-        DepartmentEntity entity = departmentDao.selectById(updateDTO.getId());
-        if (entity == null) {
-            return ResponseDTO.wrap(DepartmentResponseCodeConst.NOT_EXISTS);
-        }
-        DepartmentEntity departmentEntity = SmartBeanUtil.copy(updateDTO, DepartmentEntity.class);
-        departmentEntity.setSort(entity.getSort());
-        departmentDao.updateById(departmentEntity);
-        return ResponseDTO.succ();
-    }
 
-    /**
-     * 根据id删除部门
-     * 1、需要判断当前部门是否有子部门,有子部门则不允许删除
-     * 2、需要判断当前部门是否有员工，有员工则不能删除
-     *
-     * @param departmentId
-     * @return AjaxResult<String>
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<String> delDepartment(Long departmentId) {
-        // 是否有子级部门
-        int subDepartmentNum = departmentDao.countSubDepartment(departmentId);
-        if (subDepartmentNum > 0) {
-            return ResponseDTO.wrap(DepartmentResponseCodeConst.CANNOT_DEL_DEPARTMENT_WITH_CHILD);
-        }
 
-        // 是否有员工
-        int employeeNum = employeeDao.countByDepartmentId(departmentId);
-        if (employeeNum > 0) {
-            return ResponseDTO.wrap(DepartmentResponseCodeConst.CANNOT_DEL_DEPARTMENT_WITH_EMPLOYEE);
-        }
-        departmentDao.deleteById(departmentId);
-        return ResponseDTO.succ();
-    }
+
 
     /**
      * 根据id获取部门信息
