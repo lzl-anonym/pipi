@@ -77,7 +77,7 @@ public class EmployeeLoginService {
      */
     public ResponseDTO<EmployeeLoginDetailVO> login(@Valid EmployeeLoginFormDTO loginForm, HttpServletRequest request) {
 //        String redisVerificationCode = redisValueOperations.get(loginForm.getCodeUuid());
-//        //增加删除已使用的验证码方式 频繁登录 TODO listen 暂时移除验证码校验
+//        //增加删除已使用的验证码方式 频繁登录      暂时移除验证码校验
 //        redisValueOperations.getOperations().delete(loginForm.getCodeUuid());
 //        if (StringUtils.isEmpty(redisVerificationCode)) {
 //            return ResponseDTO.wrap(EmployeeResponseCodeConst.VERIFICATION_CODE_INVALID);

@@ -37,12 +37,10 @@ public class EmployeeLoginTokenService {
     private EmployeeLoginCacheService loginCacheService;
 
     /**
-     * 功能描述: 生成JWT TOKEN
+     * 生成JWT TOKEN
      *
      * @param employeeDTO
      * @return
-     * @auther yandanyang
-     * @date 2018/9/12 0012 上午 10:08
      */
     public String generateToken(EmployeeDTO employeeDTO) {
 
@@ -61,12 +59,10 @@ public class EmployeeLoginTokenService {
     }
 
     /**
-     * 功能描述: 根据登陆token获取登陆信息
+     * 根据登陆token获取登陆信息
      *
-     * @param
+     * @param token
      * @return
-     * @auther yandanyang
-     * @date 2018/9/12 0012 上午 10:11
      */
     public LoginTokenDTO getEmployeeTokenInfo(String token) {
         Long employeeId = -1L;
